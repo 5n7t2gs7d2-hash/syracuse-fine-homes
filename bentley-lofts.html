@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bentley Lofts | Luxury Apartments Syracuse NY | 6 Short-Term 2 Medium-Term 3 Long-Term Rentals</title>
+    <meta name="description" content="Bentley Lofts - 11 luxury apartments in Syracuse. Tallest in Armory Square. Short-term Airbnb, medium-term corporate housing, long-term leases available. 120 Walton Street, Syracuse, NY 13202">
+    <meta name="keywords" content="Bentley Lofts Syracuse, luxury apartments Syracuse NY, Tallest in Armory Square, Airbnb Syracuse, corporate housing Syracuse, long-term rentals Syracuse, 120 Walton Street apartments">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --orange-primary: #F76900; --orange-dark: #D65A00; --black: #0A0A0A; --gray-dark: #1A1A1A; --gray-medium: #4A4A4A; --gray-light: #E5E5E5; --cream: #FAF9F6; }
+        body { font-family: 'Cormorant Garamond', serif; color: var(--black); background: var(--cream); line-height: 1.6; }
+        h1, h2, h3, button, .nav-menu { font-family: 'League Spartan', sans-serif; }
+        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.98); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; height: 90px; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--black); }
+        .logo-icon { width: 50px; height: 50px; background: var(--orange-primary); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 28px; color: white; border-radius: 2px; }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-name { font-size: 20px; font-weight: 700; letter-spacing: 1px; color: var(--orange-primary); }
+        .logo-tagline { font-size: 11px; color: var(--gray-medium); letter-spacing: 2px; }
+        .nav-menu { display: flex; gap: 45px; list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--black); font-size: 14px; font-weight: 500; text-transform: uppercase; transition: color 0.3s; }
+        .nav-menu a:hover { color: var(--orange-primary); }
+        .cta-button { padding: 12px 28px; background: var(--orange-primary); color: white; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; border-radius: 2px; transition: all 0.3s; }
+        .building-hero { margin-top: 90px; padding: 80px 40px; background: linear-gradient(135deg, var(--orange-primary) 0%, var(--orange-dark) 100%); color: white; text-align: center; }
+        .hero-label { font-size: 12px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; opacity: 0.9; }
+        .hero-title { font-size: 56px; font-weight: 700; margin-bottom: 20px; letter-spacing: -1px; }
+        .hero-subtitle { font-size: 20px; max-width: 800px; margin: 0 auto 30px; opacity: 0.95; }
+        .hero-stats { display: flex; justify-content: center; gap: 50px; margin-top: 30px; }
+        .hero-stat { display: flex; flex-direction: column; }
+        .hero-stat-value { font-size: 42px; font-weight: 700; }
+        .hero-stat-label { font-size: 14px; opacity: 0.9; text-transform: uppercase; letter-spacing: 1px; }
+        .quick-links { max-width: 1400px; margin: 0 auto; padding: 40px; display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+        .quick-link { padding: 15px 35px; background: white; border: 2px solid var(--gray-light); border-radius: 30px; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; color: var(--black); transition: all 0.3s; }
+        .quick-link:hover { background: var(--orange-primary); color: white; border-color: var(--orange-primary); transform: translateY(-2px); }
+        .units-section { max-width: 1400px; margin: 0 auto; padding: 40px 40px 80px; }
+        .units-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 40px; }
+        .unit-card { background: white; border-radius: 8px; overflow: hidden; transition: all 0.4s ease; cursor: pointer; border: 1px solid var(--gray-light); text-decoration: none; color: var(--black); }
+        .unit-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: var(--orange-primary); }
+        .unit-image-container { position: relative; width: 100%; height: 280px; background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%); }
+        .unit-image { width: 100%; height: 100%; transition: transform 0.4s; }
+        .unit-card:hover .unit-image { transform: scale(1.08); }
+        .unit-badge { position: absolute; top: 15px; right: 15px; padding: 6px 14px; background: rgba(247,105,0,0.95); color: white; font-size: 11px; font-weight: 700; text-transform: uppercase; border-radius: 3px; }
+        .unit-content { padding: 30px; }
+        .unit-type { font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--orange-primary); margin-bottom: 10px; }
+        .unit-name { font-size: 24px; font-weight: 700; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .unit-features { display: flex; gap: 20px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--gray-light); }
+        .feature { display: flex; flex-direction: column; gap: 5px; }
+        .feature-value { font-size: 20px; font-weight: 700; }
+        .feature-label { font-size: 12px; color: var(--gray-medium); text-transform: uppercase; }
+        .unit-price { font-size: 28px; font-weight: 800; color: var(--orange-primary); margin-bottom: 5px; }
+        .unit-price-note { font-size: 13px; color: var(--gray-medium); }
+        .footer { background: var(--black); color: white; padding: 60px 40px 30px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 50px; margin-bottom: 40px; }
+        .footer-section h3 { font-size: 16px; font-weight: 600; text-transform: uppercase; color: var(--orange-primary); margin-bottom: 20px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--orange-primary); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); font-size: 14px; }
+        @media (max-width: 768px) { .units-grid { grid-template-columns: 1fr; } .hero-title { font-size: 38px; } .nav-menu { display: none; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="/" class="logo">
+                <div class="logo-icon" style="background:none;padding:0;width:42px;height:42px;"><img src="logo.png" alt="SFH" style="width:42px;height:42px;object-fit:contain;border-radius:4px;display:block;"></div>
+                <div class="logo-text">
+                    <div class="logo-name">SYRACUSE FINE HOMES</div>
+                    <div class="logo-tagline">THE WAY TO STAY</div>
+                </div>
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="/properties-overview">Properties</a></li>
+                    <li><a href="/team">Team</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="/contact" class="cta-button">Book Your Stay</a>
+        </div>
+    </header>
+    <div class="building-hero">
+        <div class="hero-label">Syracuse Fine Homes</div>
+        <h1 class="hero-title">Bentley Lofts</h1>
+        <p class="hero-subtitle">120 Walton Street, Syracuse, NY 13202 • Tallest in Armory Square</p>
+        <div class="hero-stats">
+            <div class="hero-stat"><div class="hero-stat-value">6</div><div class="hero-stat-label">Short-Term</div></div>
+            <div class="hero-stat"><div class="hero-stat-value">2</div><div class="hero-stat-label">Medium-Term</div></div>
+            <div class="hero-stat"><div class="hero-stat-value">3</div><div class="hero-stat-label">Long-Term</div></div>
+        </div>
+    </div>
+    <div class="quick-links">
+        <a href="/properties-overview" class="quick-link">← All Properties</a>
+        <a href="/short-term" class="quick-link">Short-Term</a>
+        <a href="/medium-term" class="quick-link">Medium-Term</a>
+        <a href="/long-term" class="quick-link">Long-Term</a>
+    </div>
+    <section class="units-section">
+        <div class="units-grid">
+            <a href="/properties/bentley-2e" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Prime Location Studio</div>
+                    <h3 class="unit-name">Bentley 2E</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">Studio</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $139/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-2f" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">2-Bedroom Armory Sqr</div>
+                    <h3 class="unit-name">Bentley 2F</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">2</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">2</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $217/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-3b" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Medium-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Armory Square Studio</div>
+                    <h3 class="unit-name">Bentley 3B</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">Studio</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $2,230/mo</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-3d" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Medium-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">1-Br Armory Square</div>
+                    <h3 class="unit-name">Bentley 3D</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $2,899/mo</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-5a" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">1-Bedroom w/ View</div>
+                    <h3 class="unit-name">Bentley 5A</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $178/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-5e" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Long-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">1-Br Exposed Brick</div>
+                    <h3 class="unit-name">Bentley 5E</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $2,800/mo</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-ph-1" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Long-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">2-Br 2-Ba Armory Sq PH</div>
+                    <h3 class="unit-name">Bentley Penthouse 1</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">2</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">2</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $3,800/mo</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-ph-2" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Penthouse Studio</div>
+                    <h3 class="unit-name">Bentley Penthouse 2</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">Studio</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $169/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-ph-3" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Penthouse w/ View</div>
+                    <h3 class="unit-name">Bentley Penthouse 3</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">2</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $199/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-6d" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Short-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Exposed Brick Skylights</div>
+                    <h3 class="unit-name">Bentley 6D</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $179/night</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+            <a href="/properties/bentley-6e" class="unit-card">
+                <div class="unit-image-container">
+                    <div class="unit-image"></div>
+                    <div class="unit-badge">Long-Term</div>
+                </div>
+                <div class="unit-content">
+                    <div class="unit-type">Exposed Brick Penthouse</div>
+                    <h3 class="unit-name">Bentley 6E</h3>
+                    <div class="unit-features">
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BR</div></div>
+                        <div class="feature"><div class="feature-value">1</div><div class="feature-label">BA</div></div>
+                    </div>
+                    <div class="unit-price">From $2,900/mo</div>
+                    <div class="unit-price-note">*Rates vary</div>
+                </div>
+            </a>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+                <img src="logo.png" alt="SFH" style="width:40px;height:40px;object-fit:contain;display:block;">
+                <div>
+                    <div style="font-family:'League Spartan',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;color:white;text-transform:uppercase;">Syracuse Fine Homes</div>
+                    <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(255,255,255,0.4);">The Way to Stay</div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li><a href="tel:9174946042">Spiro: 917-494-6042</a></li>
+                    <li><a href="tel:9178480152">Jeff: 917-848-0152</a></li>
+                    <li><a href="tel:6466284332">Will: 646-628-4332</a></li>
+                    <li><a href="/cdn-cgi/l/email-protection#573e39313817242e253634222432313e39323f383a32247934383a"><span class="__cf_email__" data-cfemail="731a1d151c33000a011210060016151a1d161b1c1e16005d101c1e">[email&#160;protected]</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class
