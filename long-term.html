@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Long-Term Rentals | Syracuse Fine Homes | Luxury Rentals Syracuse NY</title>
+    <meta name="description" content="12-month leases in Syracuse's most sought-after luxury buildings. Browse 16 available units at Syracuse Fine Homes.">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --orange-primary: #F76900; --orange-dark: #D65A00; --black: #0A0A0A; --gray-dark: #1A1A1A; --gray-medium: #4A4A4A; --gray-light: #E5E5E5; --cream: #FAF9F6; }
+        body { font-family: 'Cormorant Garamond', serif; color: var(--black); background: var(--cream); line-height: 1.6; }
+        h1, h2, h3, .nav-menu, .prop-badge, .prop-name, .prop-meta, .prop-price, .cta-button, .other-term-link { font-family: 'League Spartan', sans-serif; }
+        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.98); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        .nav-container { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; justify-content: space-between; align-items: center; height: 90px; }
+        .logo { display: flex; align-items: center; gap: 15px; text-decoration: none; color: var(--black); }
+        .logo-icon-wrap { width: 44px; height: 44px; }
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-name { font-size: 20px; font-weight: 700; letter-spacing: 1px; color: var(--orange-primary); font-family: 'League Spartan', sans-serif; }
+        .logo-tagline { font-size: 11px; color: var(--gray-medium); letter-spacing: 2px; font-family: 'League Spartan', sans-serif; }
+        .nav-menu { display: flex; gap: 45px; list-style: none; }
+        .nav-menu a { text-decoration: none; color: var(--black); font-size: 14px; font-weight: 500; text-transform: uppercase; transition: color 0.3s; }
+        .nav-menu a:hover { color: var(--orange-primary); }
+        .cta-button { padding: 12px 28px; background: var(--orange-primary); color: white; text-decoration: none; font-size: 14px; font-weight: 600; text-transform: uppercase; border-radius: 2px; transition: all 0.3s; }
+        .cta-button:hover { background: var(--orange-dark); }
+
+        .page-hero { margin-top: 90px; background: linear-gradient(135deg, var(--black) 0%, var(--gray-dark) 100%); color: white; padding: 70px 40px 60px; position: relative; overflow: hidden; }
+        .page-hero::before { content: ''; position: absolute; top: -50%; right: -5%; width: 500px; height: 500px; background: radial-gradient(circle, rgba(247,105,0,0.1) 0%, transparent 70%); pointer-events: none; }
+        .hero-inner { max-width: 1400px; margin: 0 auto; }
+        .hero-badge { display: inline-block; padding: 6px 18px; border-radius: 3px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; font-family: 'League Spartan', sans-serif; background: rgba(255,255,255,0.15); color: white; border: 1px solid rgba(255,255,255,0.3); }
+        .page-hero h1 { font-size: 54px; font-weight: 700; letter-spacing: -2px; margin-bottom: 16px; line-height: 1.05; }
+        .page-hero p { font-size: 18px; opacity: 0.7; max-width: 600px; margin-bottom: 30px; }
+        .hero-stats-row { display: flex; gap: 50px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap; }
+        .hero-stat { display: flex; flex-direction: column; gap: 4px; }
+        .stat-num { font-size: 42px; font-weight: 800; color: var(--orange-primary); font-family: 'League Spartan', sans-serif; line-height: 1; }
+        .stat-lbl { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; font-family: 'League Spartan', sans-serif; }
+
+        .other-terms { background: white; border-bottom: 1px solid var(--gray-light); }
+        .other-terms-inner { max-width: 1400px; margin: 0 auto; padding: 0 40px; display: flex; align-items: center; gap: 12px; height: 60px; }
+        .other-terms-label { font-size: 12px; color: var(--gray-medium); font-family: 'League Spartan', sans-serif; text-transform: uppercase; letter-spacing: 1px; margin-right: 4px; }
+        .other-term-link { padding: 7px 20px; border: 1.5px solid var(--gray-light); border-radius: 25px; text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--gray-medium); transition: all 0.25s; font-family: 'League Spartan', sans-serif; }
+        .other-term-link:hover { border-color: var(--orange-primary); color: var(--orange-primary); }
+        .other-term-link.current { background: var(--orange-primary); color: white; border-color: var(--orange-primary); }
+
+        .grid-section { max-width: 1400px; margin: 0 auto; padding: 50px 40px 80px; }
+        .section-intro { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; flex-wrap: wrap; gap: 16px; }
+        .section-intro h2 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+        .section-intro p { font-size: 15px; color: var(--gray-medium); }
+        .props-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 28px; }
+
+        .prop-card { background: white; border: 1px solid var(--gray-light); border-radius: 8px; overflow: hidden; text-decoration: none; color: var(--black); transition: all 0.3s; display: block; }
+        .prop-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); border-color: transparent; }
+        .prop-card-img { height: 200px; background: linear-gradient(135deg, #c8c8c8 0%, #e0e0e0 50%, #d0d0d0 100%); }
+        .prop-card-body { padding: 24px; }
+        .prop-badge { display: inline-block; padding: 4px 12px; border-radius: 25px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+        .badge-short { background: rgba(247,105,0,0.12); color: var(--orange-primary); }
+        .badge-medium { background: rgba(26,26,26,0.08); color: var(--gray-dark); }
+        .badge-long { background: rgba(26,26,26,0.05); color: var(--gray-medium); }
+        .prop-name { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+        .prop-desc { font-size: 15px; color: var(--gray-medium); margin-bottom: 14px; font-style: italic; font-family: 'Cormorant Garamond', serif; }
+        .prop-meta { display: flex; gap: 16px; font-size: 12px; color: var(--gray-medium); text-transform: uppercase; letter-spacing: 0.5px; padding-top: 14px; border-top: 1px solid var(--gray-light); margin-bottom: 12px; }
+        .prop-price { font-size: 18px; font-weight: 800; color: var(--orange-primary); }
+
+        .footer { background: #050505; color: white; padding: 60px 40px 30px; }
+        .footer-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 50px; margin-bottom: 40px; }
+        .footer-section h3 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--orange-primary); margin-bottom: 20px; font-family: 'League Spartan', sans-serif; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 14px; transition: color 0.3s; }
+        .footer-links a:hover { color: var(--orange-primary); }
+        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.35); font-size: 13px; font-family: 'League Spartan', sans-serif; }
+        @media (max-width: 768px) { .page-hero h1 { font-size: 36px; } .nav-menu { display: none; } .props-grid { grid-template-columns: 1fr; } .grid-section { padding: 30px 20px 60px; } }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon-wrap"><img src="logo.png" alt="SFH" style="width:44px;height:44px;object-fit:contain;display:block;"></div>
+                <div class="logo-text">
+                    <div class="logo-name">SYRACUSE FINE HOMES</div>
+                    <div class="logo-tagline">THE WAY TO STAY</div>
+                </div>
+            </a>
+            <nav><ul class="nav-menu">
+                <li><a href="properties-overview.html">Properties</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul></nav>
+            <a href="contact.html" class="cta-button">Book Your Stay</a>
+        </div>
+    </header>
+
+    <div class="page-hero">
+        <div class="hero-inner">
+            <div class="hero-badge">Long-Term Rentals</div>
+            <h1>Long-Term Rentals</h1>
+            <p>12-month leases in Syracuse's most sought-after luxury buildings.</p>
+            <div class="hero-stats-row">
+                <div class="hero-stat">
+                    <div class="stat-num">16</div>
+                    <div class="stat-lbl">Available Units</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-num">7</div>
+                    <div class="stat-lbl">Buildings</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="stat-num">Syracuse</div>
+                    <div class="stat-lbl">Location</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="other-terms">
+        <div class="other-terms-inner">
+            <span class="other-terms-label">Also Browse:</span>
+            <a href="all-properties.html" class="other-term-link ">All (35)</a>
+            <a href="short-term.html" class="other-term-link ">Short-Term (18)</a>
+            <a href="medium-term.html" class="other-term-link ">Medium-Term (22)</a>
+            <a href="long-term.html" class="other-term-link current">Long-Term (16)</a>
+        </div>
+    </div>
+
+    <div class="grid-section">
+        <div class="section-intro">
+            <div>
+                <h2>16 Long-Term Rentals Units Available</h2>
+                <p>Premium unfurnished and furnished apartments for residents putting down roots in Syracuse.</p>
+            </div>
+            <a href="all-properties.html" style="font-size:13px;font-weight:600;color:var(--orange-primary);text-decoration:none;font-family:'League Spartan',sans-serif;text-transform:uppercase;letter-spacing:1px;">View All Properties →</a>
+        </div>
+        <div class="props-grid">
+                <a href="bentley-3d.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">Bentley 3D</div>
+                        <div class="prop-desc">1-Bedroom Armory Square</div>
+                        <div class="prop-meta">
+                            <span>1 BR</span>
+                            <span>1 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $2,899/mo</div>
+                    </div>
+                </a>
+                <a href="bentley-6d.html" class="prop-card" data-cats="short,medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-short">Short · Med · Long</div>
+                        <div class="prop-name">Bentley 6D</div>
+                        <div class="prop-desc">Luxury High-Floor 2-Bedroom</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>2 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $235/night</div>
+                    </div>
+                </a>
+                <a href="bentley-ph-1.html" class="prop-card" data-cats="short,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-short">Short · Long</div>
+                        <div class="prop-name">Bentley PH-1</div>
+                        <div class="prop-desc">Penthouse — Full Floor</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>2 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $299/night</div>
+                    </div>
+                </a>
+                <a href="hickok-bungalow.html" class="prop-card" data-cats="long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-long">Long</div>
+                        <div class="prop-name">Hickok Bungalow</div>
+                        <div class="prop-desc">Serene Private Bungalow</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Stellar Syracus</span>
+                        </div>
+                        <div class="prop-price">From $2,250/mo</div>
+                    </div>
+                </a>
+                <a href="montgomery-2b.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">Montgomery 2B</div>
+                        <div class="prop-desc">Urban 1-Bedroom Loft</div>
+                        <div class="prop-meta">
+                            <span>1 BR</span>
+                            <span>1 BA</span>
+                            <span>Downtown</span>
+                        </div>
+                        <div class="prop-price">From $3,200/mo</div>
+                    </div>
+                </a>
+                <a href="montgomery-3.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">Montgomery 3</div>
+                        <div class="prop-desc">Classic Downtown Studio</div>
+                        <div class="prop-meta">
+                            <span>Studio</span>
+                            <span>1 BA</span>
+                            <span>Downtown</span>
+                        </div>
+                        <div class="prop-price">From $2,800/mo</div>
+                    </div>
+                </a>
+                <a href="montgomery-4b.html" class="prop-card" data-cats="short,medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-short">Short · Med · Long</div>
+                        <div class="prop-name">Montgomery 4B</div>
+                        <div class="prop-desc">Bright 2-Bedroom Downtown</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Downtown</span>
+                        </div>
+                        <div class="prop-price">From $189/night</div>
+                    </div>
+                </a>
+                <a href="piper-4.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">Piper 4</div>
+                        <div class="prop-desc">1-Bedroom Duplex</div>
+                        <div class="prop-meta">
+                            <span>1 BR</span>
+                            <span>1.5 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $2,950/mo</div>
+                    </div>
+                </a>
+                <a href="piper-6.html" class="prop-card" data-cats="short,medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-short">Short · Med · Long</div>
+                        <div class="prop-name">Piper 6</div>
+                        <div class="prop-desc">2-Bedroom Premium Flat</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>2 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $205/night</div>
+                    </div>
+                </a>
+                <a href="piper-8.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">Piper 8</div>
+                        <div class="prop-desc">2-Bedroom Garden Level</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Armory Square</span>
+                        </div>
+                        <div class="prop-price">From $3,000/mo</div>
+                    </div>
+                </a>
+                <a href="tudor-4.html" class="prop-card" data-cats="long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-long">Long</div>
+                        <div class="prop-name">Tudor House 4</div>
+                        <div class="prop-desc">2-Bedroom #1 Location</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Quiet Luxury Ne</span>
+                        </div>
+                        <div class="prop-price">From $2,500/mo</div>
+                    </div>
+                </a>
+                <a href="vhp-commons-1.html" class="prop-card" data-cats="long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-long">Long</div>
+                        <div class="prop-name">VHP Commons 1</div>
+                        <div class="prop-desc">Hillside Studio Retreat</div>
+                        <div class="prop-meta">
+                            <span>Studio</span>
+                            <span>1 BA</span>
+                            <span>Hillside Retrea</span>
+                        </div>
+                        <div class="prop-price">From $2,150/mo</div>
+                    </div>
+                </a>
+                <a href="vhp-commons-6.html" class="prop-card" data-cats="long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-long">Long</div>
+                        <div class="prop-name">VHP Commons 6</div>
+                        <div class="prop-desc">Scenic Hillside 1-Bedroom</div>
+                        <div class="prop-meta">
+                            <span>1 BR</span>
+                            <span>1 BA</span>
+                            <span>Hillside Retrea</span>
+                        </div>
+                        <div class="prop-price">From $2,300/mo</div>
+                    </div>
+                </a>
+                <a href="vhp-cottage.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">VHP Cottage</div>
+                        <div class="prop-desc">Charming Private Cottage</div>
+                        <div class="prop-meta">
+                            <span>1 BR</span>
+                            <span>1 BA</span>
+                            <span>Hillside Retrea</span>
+                        </div>
+                        <div class="prop-price">From $3,125/mo</div>
+                    </div>
+                </a>
+                <a href="vhp-manor-2.html" class="prop-card" data-cats="medium,long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-medium">Med · Long</div>
+                        <div class="prop-name">VHP Manor 2</div>
+                        <div class="prop-desc">Hillside 2-Bedroom Manor</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Hillside Retrea</span>
+                        </div>
+                        <div class="prop-price">From $3,169/mo</div>
+                    </div>
+                </a>
+                <a href="vhp-manor-4.html" class="prop-card" data-cats="long">
+                    <div class="prop-card-img"></div>
+                    <div class="prop-card-body">
+                        <div class="prop-badge badge-long">Long</div>
+                        <div class="prop-name">VHP Manor 4</div>
+                        <div class="prop-desc">Premium Manor 2-Bedroom</div>
+                        <div class="prop-meta">
+                            <span>2 BR</span>
+                            <span>1 BA</span>
+                            <span>Hillside Retrea</span>
+                        </div>
+                        <div class="prop-price">From $3,000/mo</div>
+                    </div>
+                </a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section"><h3>Contact</h3><ul class="footer-links">
+                <li><a href="tel:9174946042">Spiro: 917-494-6042</a></li>
+                <li><a href="tel:9178480152">Jeff: 917-848-0152</a></li>
+                <li><a href="tel:6466284332">Will: 646-628-4332</a></li>
+                <li><a href="mailto:info@syracusefinehomes.com">info@syracusefinehomes.com</a></li>
+            </ul></div>
+            <div class="footer-section"><h3>Buildings</h3><ul class="footer-links">
+                <li><a href="bentley-lofts.html">Bentley Lofts</a></li>
+                <li><a href="piper-phillips-residences.html">Piper-Phillips Residences</a></li>
+                <li><a href="montgomery-house.html">Montgomery House</a></li>
+                <li><a href="lofts-at-syracuse-trust.html">Lofts at Syracuse Trust</a></li>
+                <li><a href="tudor-house.html">Tudor House</a></li>
+                <li><a href="village-at-hillside-park.html">Village at Hillside Park</a></li>
+                <li><a href="hickok-bungalow.html">Hickok Bungalow</a></li>
+            </ul></div>
+            <div class="footer-section"><h3>Rentals</h3><ul class="footer-links">
+                <li><a href="short-term.html">Short-Term</a></li>
+                <li><a href="medium-term.html">Medium-Term</a></li>
+                <li><a href="long-term.html">Long-Term</a></li>
+                <li><a href="all-properties.html">All Properties</a></li>
+            </ul></div>
+            <div class="footer-section"><h3>Company</h3><ul class="footer-links">
+                <li><a href="team.html">Our Team</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul></div>
+        </div>
+        <div class="footer-bottom">&copy; 2026 Syracuse Fine Homes. All rights reserved.</div>
+    </footer>
+</body>
+</html>
