@@ -1,0 +1,1828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SFH Admin — Syracuse Fine Homes</title>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange: #F76900; --orange-dark: #D65A00; --orange-glow: rgba(247,105,0,0.15);
+  --black: #0A0A0A; --dark: #111; --dark2: #161616; --dark3: #1E1E1E;
+  --border: rgba(255,255,255,0.07); --border-hover: rgba(255,255,255,0.15);
+  --text: rgba(255,255,255,0.87); --muted: rgba(255,255,255,0.4);
+  --success: #22c55e; --error: #ef4444; --warn: #f59e0b;
+  --sidebar-w: 260px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px}
+body{font-family:'League Spartan',sans-serif;background:var(--black);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--dark);position:fixed;inset:0;z-index:1000;flex-direction:column;gap:0}
+.login-bg{position:absolute;inset:0;background:radial-gradient(ellipse 800px 600px at 50% 40%, rgba(247,105,0,0.07) 0%,transparent 70%);pointer-events:none}
+.login-card{background:var(--dark2);border:1px solid var(--border);border-radius:8px;padding:50px 44px 44px;width:420px;position:relative;z-index:1}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:36px}
+.login-icon{width:42px;height:42px;background:var(--orange);border-radius:3px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;letter-spacing:0.5px;color:white}
+.login-brand{display:flex;flex-direction:column}
+.login-brand-name{font-size:14px;font-weight:700;letter-spacing:2px;color:white}
+.login-brand-sub{font-size:10px;color:var(--muted);letter-spacing:3px;margin-top:1px}
+.login-card h1{font-size:26px;font-weight:700;margin-bottom:6px;color:white;letter-spacing:-0.5px}
+.login-card p{font-size:13px;color:var(--muted);margin-bottom:32px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.field input{width:100%;padding:12px 16px;background:var(--dark3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'League Spartan',sans-serif;font-size:14px;outline:none;transition:border-color .2s}
+.field input:focus{border-color:var(--orange)}
+.btn-primary{width:100%;padding:13px;background:var(--orange);color:white;border:none;border-radius:4px;font-family:'League Spartan',sans-serif;font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;margin-top:4px}
+.btn-primary:hover{background:var(--orange-dark)}
+.btn-primary:disabled{opacity:.5;cursor:not-allowed}
+.login-err{display:none;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#ef4444;padding:10px 14px;border-radius:4px;font-size:12px;margin-top:12px;text-align:center}
+.config-note{margin-top:28px;padding:16px;background:rgba(247,105,0,.08);border:1px solid rgba(247,105,0,.2);border-radius:4px;font-size:11px;color:rgba(255,255,255,.55);line-height:1.6}
+.config-note strong{color:var(--orange)}
+.config-note code{background:rgba(255,255,255,.07);padding:2px 6px;border-radius:3px;font-family:monospace;font-size:11px}
+
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar-w);background:var(--dark2);border-right:1px solid var(--border);z-index:200;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar-top{padding:20px 20px 16px;border-bottom:1px solid var(--border)}
+.sidebar-logo{display:flex;align-items:center;gap:10px}
+.sidebar-icon{width:34px;height:34px;background:var(--orange);border-radius:2px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;letter-spacing:.5px}
+.sidebar-brand{font-size:12px;font-weight:700;letter-spacing:2px;color:white}
+.sidebar-sub{font-size:9px;color:var(--muted);letter-spacing:2.5px;margin-top:1px}
+.sidebar-section{padding:20px 12px 6px}
+.sidebar-section-label{font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);padding:0 8px;margin-bottom:6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:4px;cursor:pointer;transition:all .2s;color:var(--muted);font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;border:1px solid transparent;user-select:none}
+.nav-item:hover{background:rgba(255,255,255,.04);color:var(--text)}
+.nav-item.active{background:var(--orange-glow);color:var(--orange);border-color:rgba(247,105,0,.2)}
+.nav-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(--orange);color:white;border-radius:10px;padding:1px 7px;font-size:9px;font-weight:700}
+.sidebar-bottom{margin-top:auto;padding:16px 12px;border-top:1px solid var(--border)}
+.user-info{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:4px;background:rgba(255,255,255,.03)}
+.user-avatar{width:30px;height:30px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;flex-shrink:0}
+.user-name{font-size:11px;font-weight:600;color:var(--text)}
+.user-role{font-size:9px;color:var(--muted);letter-spacing:1px}
+.logout-btn{width:100%;margin-top:8px;padding:8px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:4px;color:var(--muted);font-family:'League Spartan',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.logout-btn:hover{border-color:var(--error);color:var(--error)}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sidebar-w);min-height:100vh;display:flex;flex-direction:column}
+.topbar{height:60px;background:var(--dark2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:sticky;top:0;z-index:100}
+.topbar-title{font-size:14px;font-weight:700;letter-spacing:.5px;color:white}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.toast-area{position:fixed;top:16px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:12px 18px;border-radius:4px;font-size:12px;font-weight:600;letter-spacing:.5px;box-shadow:0 4px 20px rgba(0,0,0,.3);animation:slideIn .25s ease;display:flex;align-items:center;gap:8px}
+.toast.success{background:#16803c;color:white;border:1px solid #22c55e}
+.toast.error{background:#991b1b;color:white;border:1px solid #ef4444}
+.toast.info{background:var(--dark3);color:var(--text);border:1px solid var(--border)}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+.content{flex:1;padding:32px}
+
+/* ── PANELS ── */
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── STATS CARDS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:22px 24px;transition:border-color .2s}
+.stat-card:hover{border-color:var(--border-hover)}
+.stat-value{font-size:36px;font-weight:800;color:white;line-height:1;letter-spacing:-1px}
+.stat-value.orange{color:var(--orange)}
+.stat-label{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:6px}
+.stat-sub{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* ── SECTION HEADER ── */
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.section-hdr h2{font-size:20px;font-weight:700;letter-spacing:-.5px;color:white}
+.section-hdr p{font-size:12px;color:var(--muted);margin-top:3px}
+
+/* ── TABLES ── */
+.table-wrap{background:var(--dark2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.table-toolbar{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-input{flex:1;min-width:200px;padding:8px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'League Spartan',sans-serif;font-size:12px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--orange)}
+.search-input::placeholder{color:var(--muted)}
+.filter-select{padding:8px 12px;background:var(--dark3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'League Spartan',sans-serif;font-size:12px;outline:none;cursor:pointer}
+.filter-select option{background:var(--dark3)}
+table{width:100%;border-collapse:collapse}
+thead th{padding:11px 16px;text-align:left;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap}
+tbody tr{border-bottom:1px solid rgba(255,255,255,.04);transition:background .15s;cursor:pointer}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,.025)}
+tbody td{padding:13px 16px;font-size:13px;color:var(--text);vertical-align:middle}
+.td-label{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.badge{display:inline-block;padding:3px 9px;border-radius:10px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.badge-short{background:rgba(247,105,0,.2);color:var(--orange);border:1px solid rgba(247,105,0,.3)}
+.badge-medium{background:rgba(255,255,255,.08);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.12)}
+.badge-long{background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.08)}
+.badge-avail{background:rgba(34,197,94,.15);color:#22c55e;border:1px solid rgba(34,197,94,.25)}
+.badge-unavail{background:rgba(239,68,68,.15);color:#ef4444;border:1px solid rgba(239,68,68,.25)}
+.row-actions{display:flex;gap:6px;opacity:0;transition:opacity .15s}
+tbody tr:hover .row-actions{opacity:1}
+.act-btn{padding:5px 12px;border-radius:3px;font-family:'League Spartan',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .2s}
+.act-edit{background:rgba(247,105,0,.1);border-color:rgba(247,105,0,.3);color:var(--orange)}
+.act-edit:hover{background:var(--orange);color:white}
+.act-del{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.25);color:#ef4444}
+.act-del:hover{background:#ef4444;color:white}
+.act-view{background:rgba(255,255,255,.06);border-color:var(--border);color:var(--muted)}
+.act-view:hover{background:rgba(255,255,255,.1);color:white}
+
+/* ── ADD BUTTON ── */
+.btn-add{padding:10px 20px;background:var(--orange);color:white;border:none;border-radius:4px;font-family:'League Spartan',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.btn-add:hover{background:var(--orange-dark)}
+.btn-save{padding:10px 24px;background:var(--orange);color:white;border:none;border-radius:4px;font-family:'League Spartan',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-save:hover{background:var(--orange-dark)}
+.btn-save:disabled{opacity:.5;cursor:not-allowed}
+.btn-cancel{padding:10px 20px;background:rgba(255,255,255,.05);color:var(--muted);border:1px solid var(--border);border-radius:4px;font-family:'League Spartan',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-cancel:hover{border-color:var(--border-hover);color:var(--text)}
+.btn-danger{padding:10px 20px;background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.3);border-radius:4px;font-family:'League Spartan',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.btn-danger:hover{background:#ef4444;color:white}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--dark2);border:1px solid var(--border);border-radius:8px;width:100%;max-width:700px;box-shadow:0 24px 80px rgba(0,0,0,.5);margin:auto}
+.modal-header{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:17px;font-weight:700;letter-spacing:-.3px;color:white}
+.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:4px;line-height:1;transition:color .2s}
+.modal-close:hover{color:white}
+.modal-body{padding:28px}
+.modal-footer{padding:18px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:flex-end;gap:10px}
+
+/* ── FORM ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.form-grid.cols-1{grid-template-columns:1fr}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.span-2{grid-column:1/-1}
+.form-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.form-input,.form-select,.form-textarea{padding:10px 14px;background:var(--dark3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'League Spartan',sans-serif;font-size:13px;outline:none;transition:border-color .2s;width:100%}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--orange)}
+.form-select option{background:var(--dark3)}
+.form-textarea{min-height:100px;resize:vertical;line-height:1.5}
+.form-hint{font-size:10px;color:var(--muted);line-height:1.5}
+.form-divider{grid-column:1/-1;border:none;border-top:1px solid var(--border);margin:4px 0}
+.form-section-label{grid-column:1/-1;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--orange);padding-top:4px}
+.toggle-wrap{display:flex;align-items:center;gap:10px}
+.toggle{width:36px;height:20px;background:var(--border);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.toggle.on{background:var(--orange)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:14px;height:14px;background:white;border-radius:50%;transition:transform .2s}
+.toggle.on::after{transform:translateX(16px)}
+.toggle-label{font-size:12px;color:var(--text)}
+
+/* ── IMAGE UPLOAD ── */
+.img-upload-zone{border:2px dashed var(--border);border-radius:6px;padding:30px;text-align:center;cursor:pointer;transition:all .2s;background:var(--dark3)}
+.img-upload-zone:hover,.img-upload-zone.drag{border-color:var(--orange);background:var(--orange-glow)}
+.img-upload-zone p{font-size:12px;color:var(--muted);margin-top:8px}
+.img-upload-zone span{font-size:24px}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:10px;margin-top:14px}
+.img-thumb{position:relative;aspect-ratio:1;border-radius:4px;overflow:hidden;background:var(--dark3);border:1px solid var(--border)}
+.img-thumb img{width:100%;height:100%;object-fit:cover}
+.img-thumb-del{position:absolute;top:4px;right:4px;background:rgba(239,68,68,.9);color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:10px;cursor:pointer;display:none;align-items:center;justify-content:center}
+.img-thumb:hover .img-thumb-del{display:flex}
+
+/* ── SETTINGS PAGE ── */
+.settings-sections{display:flex;flex-direction:column;gap:24px}
+.settings-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.settings-card-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.settings-card-title{font-size:13px;font-weight:700;letter-spacing:.5px;color:white}
+.settings-card-body{padding:24px}
+.settings-row{display:flex;align-items:flex-start;gap:20px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.settings-row:last-child{border-bottom:none}
+.settings-row-info{flex:1}
+.settings-row-key{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.settings-row-val{font-size:13px;color:var(--text);margin-top:3px}
+.settings-row-edit{flex-shrink:0}
+.inline-edit-wrap{display:flex;gap:8px;align-items:center;margin-top:6px}
+.inline-input{padding:7px 12px;background:var(--dark3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'League Spartan',sans-serif;font-size:12px;outline:none;transition:border-color .2s;min-width:280px}
+.inline-input:focus{border-color:var(--orange)}
+.btn-sm{padding:7px 14px;border-radius:3px;font-family:'League Spartan',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:1px solid;transition:all .2s}
+.btn-sm-save{background:var(--orange);border-color:var(--orange);color:white}
+.btn-sm-save:hover{background:var(--orange-dark)}
+.btn-sm-cancel{background:transparent;border-color:var(--border);color:var(--muted)}
+.btn-sm-cancel:hover{border-color:var(--border-hover);color:var(--text)}
+
+/* ── DASHBOARD RECENT ── */
+.recent-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.recent-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.recent-card-hdr{padding:14px 18px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.recent-item{padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.recent-item:last-child{border-bottom:none}
+.recent-item-name{color:var(--text);font-weight:600}
+.recent-item-sub{color:var(--muted);font-size:11px}
+
+/* ── EMPTY STATE ── */
+.empty-state{padding:60px 20px;text-align:center;color:var(--muted)}
+.empty-state span{font-size:36px;display:block;margin-bottom:12px}
+.empty-state p{font-size:13px}
+
+/* ── FAQ LIST ── */
+.faq-item{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:12px;transition:border-color .2s}
+.faq-item:hover{border-color:var(--border-hover)}
+.faq-item-q{font-size:14px;font-weight:700;color:white;margin-bottom:6px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.faq-item-a{font-size:13px;color:var(--muted);line-height:1.6;font-family:'Cormorant Garamond',serif}
+.faq-item-meta{display:flex;align-items:center;gap:8px;margin-top:10px}
+
+/* ── CONTACT INBOX ── */
+.inbox-item{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:18px 22px;margin-bottom:12px;transition:border-color .2s;cursor:pointer}
+.inbox-item:hover{border-color:var(--orange)}
+.inbox-item.unread{border-left:3px solid var(--orange)}
+.inbox-item-name{font-size:14px;font-weight:700;color:white}
+.inbox-item-preview{font-size:12px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.inbox-item-meta{display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--muted)}
+
+/* ── LOADING ── */
+.loading{display:flex;align-items:center;justify-content:center;padding:60px;flex-direction:column;gap:12px;color:var(--muted)}
+.spinner{width:28px;height:28px;border:2px solid var(--border);border-top-color:var(--orange);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.skeleton{background:linear-gradient(90deg,var(--dark3) 25%,rgba(255,255,255,.04) 50%,var(--dark3) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:4px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ── TEAM CARDS ── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.team-card{background:var(--dark2);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s}
+.team-card:hover{border-color:var(--border-hover)}
+.team-card-img{height:160px;background:linear-gradient(135deg,var(--dark3),var(--dark2));display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--muted)}
+.team-card-body{padding:18px 20px}
+.team-card-name{font-size:17px;font-weight:700;color:white;margin-bottom:2px}
+.team-card-role{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+.team-card-info{font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+.team-card-actions{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px}
+
+/* ── BUILDING CARDS (dashboard) ── */
+.building-list{display:flex;flex-direction:column;gap:10px}
+.building-row{background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:14px 18px;display:flex;align-items:center;gap:16px;transition:border-color .2s;cursor:pointer}
+.building-row:hover{border-color:var(--orange)}
+.building-row-indicator{width:4px;height:40px;background:var(--orange);border-radius:2px;flex-shrink:0}
+.building-row-info{flex:1}
+.building-row-name{font-size:14px;font-weight:700;color:white}
+.building-row-addr{font-size:11px;color:var(--muted);margin-top:2px}
+.building-row-stats{display:flex;gap:12px;font-size:11px;color:var(--muted)}
+.building-row-stat strong{color:var(--text)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,.2)}
+
+  /* ── PAGE EDITOR ── */
+  .page-editor { display: flex; flex-direction: column; gap: 24px; }
+  .pe-section { background: var(--dark2); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+  .pe-section-header { padding: 16px 20px; background: var(--dark3); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .pe-section-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); }
+  .pe-fields { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+  .pe-field { display: flex; flex-direction: column; gap: 6px; }
+  .pe-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+  .pe-input { background: var(--dark3); border: 1px solid var(--border); border-radius: 4px; padding: 10px 12px; color: var(--text); font-family: inherit; font-size: 13px; transition: border-color .2s; width: 100%; }
+  .pe-input:focus { outline: none; border-color: var(--orange); }
+  .pe-textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .pe-save-bar { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; background: var(--dark3); border-top: 1px solid var(--border); }
+  .pe-save-btn { background: var(--orange); color: white; border: none; border-radius: 4px; padding: 10px 28px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background .2s; }
+  .pe-save-btn:hover { background: var(--orange-dark); }
+  .pe-save-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .pe-save-status { font-size: 12px; color: var(--muted); }
+  .pe-save-status.saved { color: var(--success); }
+  .pe-save-status.error { color: var(--error); }
+  .pe-page-title { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .pe-page-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     CONFIGURATION — Replace with your Supabase credentials
+═══════════════════════════════════════════ -->
+<script>
+// ┌─────────────────────────────────────────────────────────────┐
+// │  STEP 1: Replace these two values with yours from Supabase  │
+// │  Dashboard → Project Settings → API                         │
+// └─────────────────────────────────────────────────────────────┘
+const SUPABASE_URL  = 'https://xctptubheheuoneloxph.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjdHB0dWJoZWhldW9uZWxveHBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDUwMDQsImV4cCI6MjA4NzYyMTAwNH0.306y0oyPxkyyOotptGokEeN7qd0vsoHVLvTfoZ00RkA';
+</script>
+
+<!-- ═══════════════════════════════════════════ LOGIN SCREEN ══ -->
+<div id="login-screen">
+  <div class="login-bg"></div>
+  <div class="login-card">
+    <div class="login-logo">
+      <div class="login-icon">SFH</div>
+      <div class="login-brand">
+        <div class="login-brand-name">SYRACUSE FINE HOMES</div>
+        <div class="login-brand-sub">ADMIN PANEL</div>
+      </div>
+    </div>
+    <h1>Welcome back</h1>
+    <p>Sign in to manage your properties</p>
+    <div class="field">
+      <label>Email Address</label>
+      <input type="email" id="login-email" placeholder="you@syracusefinehomes.com" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="••••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()">Sign In</button>
+    <div class="login-err" id="login-err"></div>
+    <div class="config-note">
+      <strong>First time setup?</strong> Replace <code>SUPABASE_URL</code> and <code>SUPABASE_ANON</code> at the top of this file with your project credentials, then create an admin user in <strong>Supabase → Authentication → Users</strong>.
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ MAIN APP ══════ -->
+<div id="app">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="sidebar-logo">
+        <div class="sidebar-icon">SFH</div>
+        <div>
+          <div class="sidebar-brand">SFH ADMIN</div>
+          <div class="sidebar-sub">FINE HOMES</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Overview</div>
+      <div class="nav-item active" onclick="showPanel('dashboard',this)">
+        <span class="nav-icon">⬛</span> Dashboard
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Properties</div>
+      <div class="nav-item" onclick="showPanel('buildings',this)">
+        <span class="nav-icon">🏛</span> Buildings
+      </div>
+      <div class="nav-item" onclick="showPanel('units',this)">
+        <span class="nav-icon">🏠</span> Units
+      </div>
+      <div class="nav-item" onclick="showPanel('images',this)">
+        <span class="nav-icon">🖼</span> Images
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Page Editor</div>
+      <div class="nav-item" onclick="showPanel('page_homepage',this)">
+        <span class="nav-icon">🏠</span> Homepage
+      </div>
+      <div class="nav-item" onclick="showPanel('page_contact',this)">
+        <span class="nav-icon">📞</span> Contact
+      </div>
+      <div class="nav-item" onclick="showPanel('page_faq',this)">
+        <span class="nav-icon">❓</span> FAQ
+      </div>
+      <div class="nav-item" onclick="showPanel('page_team',this)">
+        <span class="nav-icon">👤</span> Team
+      </div>
+      <div class="nav-item" onclick="showPanel('page_short_term',this)">
+        <span class="nav-icon">🌙</span> Short-Term
+      </div>
+      <div class="nav-item" onclick="showPanel('page_medium_term',this)">
+        <span class="nav-icon">📅</span> Medium-Term
+      </div>
+      <div class="nav-item" onclick="showPanel('page_long_term',this)">
+        <span class="nav-icon">🏡</span> Long-Term
+      </div>
+      <div class="nav-item" onclick="showPanel('page_properties_overview',this)">
+        <span class="nav-icon">🏢</span> Properties Overview
+      </div>
+      <div class="nav-item" onclick="showPanel('page_all_properties',this)">
+        <span class="nav-icon">📋</span> All Properties
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Content</div>
+      <div class="nav-item" onclick="showPanel('team',this)">
+        <span class="nav-icon">👤</span> Team Members
+      </div>
+      <div class="nav-item" onclick="showPanel('faq',this)">
+        <span class="nav-icon">❓</span> FAQ
+      </div>
+      <div class="nav-item" onclick="showPanel('settings',this)">
+        <span class="nav-icon">⚙</span> Site Settings
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-section-label">Inbox</div>
+      <div class="nav-item" onclick="showPanel('inbox',this)">
+        <span class="nav-icon">✉</span> Contact Submissions
+        <span class="nav-badge" id="inbox-badge" style="display:none">0</span>
+      </div>
+    </div>
+
+    <div class="sidebar-bottom">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">?</div>
+        <div>
+          <div class="user-name" id="user-email-display">Loading...</div>
+          <div class="user-role">Administrator</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <div id="topbar-title" class="topbar-title">Dashboard</div>
+      <div class="topbar-right">
+        <div style="font-size:11px;color:var(--muted)" id="last-saved"></div>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ══ DASHBOARD ══ -->
+      <div id="panel-dashboard" class="panel active">
+        <div class="stats-grid" id="dash-stats">
+          <div class="stat-card"><div class="stat-value orange skeleton" style="height:36px;width:60px">&nbsp;</div><div class="stat-label">Total Units</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="height:36px;width:40px">&nbsp;</div><div class="stat-label">Buildings</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="height:36px;width:40px">&nbsp;</div><div class="stat-label">Short-Term</div></div>
+          <div class="stat-card"><div class="stat-value skeleton" style="height:36px;width:40px">&nbsp;</div><div class="stat-label">Unread Messages</div></div>
+        </div>
+        <div class="recent-grid">
+          <div class="recent-card">
+            <div class="recent-card-hdr">All Buildings</div>
+            <div id="dash-buildings"><div class="loading"><div class="spinner"></div></div></div>
+          </div>
+          <div class="recent-card">
+            <div class="recent-card-hdr">Recent Activity</div>
+            <div id="dash-activity">
+              <div class="recent-item"><span class="recent-item-name">Admin panel loaded</span><span class="recent-item-sub">Just now</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ BUILDINGS ══ -->
+      <div id="panel-buildings" class="panel">
+        <div class="section-hdr">
+          <div><h2>Buildings</h2><p>Manage all property buildings</p></div>
+          <button class="btn-add" onclick="openBuildingModal()">＋ Add Building</button>
+        </div>
+        <div class="building-list" id="buildings-list">
+          <div class="loading"><div class="spinner"></div><span>Loading buildings...</span></div>
+        </div>
+      </div>
+
+      <!-- ══ UNITS ══ -->
+      <div id="panel-units" class="panel">
+        <div class="section-hdr">
+          <div><h2>Units</h2><p>All individual rental units across all buildings</p></div>
+          <button class="btn-add" onclick="openUnitModal()">＋ Add Unit</button>
+        </div>
+        <div class="table-wrap">
+          <div class="table-toolbar">
+            <input class="search-input" id="units-search" placeholder="Search units..." oninput="filterUnitsTable()">
+            <select class="filter-select" id="units-building-filter" onchange="filterUnitsTable()">
+              <option value="">All Buildings</option>
+            </select>
+            <select class="filter-select" id="units-type-filter" onchange="filterUnitsTable()">
+              <option value="">All Types</option>
+              <option>Short-Term</option>
+              <option>Medium-Term</option>
+              <option>Long-Term</option>
+            </select>
+          </div>
+          <table>
+            <thead><tr>
+              <th>Unit</th><th>Building</th><th>Type</th><th>Bed/Bath</th><th>Price</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody id="units-tbody">
+              <tr><td colspan="7"><div class="loading"><div class="spinner"></div></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══ IMAGES ══ -->
+      <div id="panel-images" class="panel">
+        <div class="section-hdr">
+          <div><h2>Image Manager</h2><p>Upload and manage photos for buildings and units</p></div>
+        </div>
+        <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:28px;margin-bottom:20px">
+          <div class="form-group" style="margin-bottom:18px">
+            <label class="form-label">Assign To</label>
+            <select class="form-select" id="img-target" style="max-width:400px" onchange="loadImagesFor()">
+              <option value="">— Select a building or unit —</option>
+            </select>
+          </div>
+          <div class="img-upload-zone" id="img-drop-zone" onclick="document.getElementById('img-file-input').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="handleDrop(event)">
+            <span>📷</span>
+            <p>Click to upload or drag & drop images here<br><small style="font-size:10px;opacity:.6">PNG, JPG, WEBP — max 5MB each</small></p>
+          </div>
+          <input type="file" id="img-file-input" multiple accept="image/*" style="display:none" onchange="handleFileSelect(event)">
+          <div class="img-grid" id="img-preview-grid"></div>
+        </div>
+        <div style="background:var(--dark2);border:1px solid var(--border);border-radius:6px;padding:28px">
+          <div class="recent-card-hdr" style="margin-bottom:16px">Current Images</div>
+          <div class="img-grid" id="img-current-grid"><div class="empty-state"><span>🖼</span><p>Select a building or unit above to manage its images</p></div></div>
+        </div>
+      </div>
+
+      <!-- ══ TEAM ══ -->
+      <div id="panel-team" class="panel">
+        <div class="section-hdr">
+          <div><h2>Team Members</h2><p>Manage the people behind Syracuse Fine Homes</p></div>
+          <button class="btn-add" onclick="openTeamModal()">＋ Add Member</button>
+        </div>
+        <div class="team-grid" id="team-grid">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- ══ FAQ ══ -->
+      <div id="panel-faq" class="panel">
+        <div class="section-hdr">
+          <div><h2>FAQ</h2><p>Manage frequently asked questions</p></div>
+          <button class="btn-add" onclick="openFaqModal()">＋ Add Question</button>
+        </div>
+        <div id="faq-list">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- ══ SETTINGS ══ -->
+      <div id="panel-settings" class="panel">
+        <div class="section-hdr"><div><h2>Site Settings</h2><p>Global configuration for syracusefinehomes.com</p></div></div>
+        <div class="settings-sections" id="settings-sections">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- ══ INBOX ══ -->
+      <div id="panel-inbox" class="panel">
+        <div class="section-hdr"><div><h2>Contact Submissions</h2><p>Inquiries received from the website</p></div></div>
+        <div id="inbox-list">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+
+  <!-- ── PAGE EDITOR PANELS ── -->
+
+  <!-- Page editor render function is in JS, panels are generated dynamically -->
+  <div id="panel-page_homepage" class="panel" style="display:none"></div>
+  <div id="panel-page_contact" class="panel" style="display:none"></div>
+  <div id="panel-page_faq" class="panel" style="display:none"></div>
+  <div id="panel-page_team" class="panel" style="display:none"></div>
+  <div id="panel-page_short_term" class="panel" style="display:none"></div>
+  <div id="panel-page_medium_term" class="panel" style="display:none"></div>
+  <div id="panel-page_long_term" class="panel" style="display:none"></div>
+  <div id="panel-page_properties_overview" class="panel" style="display:none"></div>
+  <div id="panel-page_all_properties" class="panel" style="display:none"></div>
+  </main>
+</div><!-- /app -->
+
+<!-- ══ TOAST AREA ══ -->
+<div class="toast-area" id="toast-area"></div>
+
+<!-- ══ MODAL ══ -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Edit</div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-footer" id="modal-footer">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-save" id="modal-save-btn">Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════════════ -->
+<script>
+// ── SUPABASE CLIENT (lightweight fetch-based, no SDK needed) ──
+const sb = {
+  headers: () => ({
+    'Content-Type': 'application/json',
+    'apikey': SUPABASE_ANON,
+    'Authorization': `Bearer ${sb.token || SUPABASE_ANON}`
+  }),
+  token: null,
+  user: null,
+
+  async rpc(path, method='GET', body=null) {
+    const opts = { method, headers: sb.headers() };
+    if (body) opts.body = JSON.stringify(body);
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, opts);
+    if (!res.ok) { const e = await res.json().catch(()=>({message:res.statusText})); throw new Error(e.message||e.error_description||'Request failed'); }
+    const ct = res.headers.get('content-type')||'';
+    return ct.includes('json') ? res.json() : res.text();
+  },
+
+  async from(table) {
+    return { select: (cols='*',opts='') => sb.rpc(`${table}?select=${cols}${opts}`,'GET'),
+             insert: (data) => sb.rpc(`${table}`,'POST',Array.isArray(data)?data:[data]),
+             update: (data,match) => sb.rpc(`${table}?${match}`,'PATCH',data),
+             delete: (match) => sb.rpc(`${table}?${match}`,'DELETE'),
+             upsert: (data) => sb.rpc(`${table}`,'POST',Array.isArray(data)?data:[data], true) };
+  },
+
+  async select(table, query='') {
+    return sb.rpc(`${table}?${query}`);
+  },
+  async insert(table, data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}`, {
+      method:'POST', headers:{...sb.headers(),'Prefer':'return=representation'},
+      body:JSON.stringify(Array.isArray(data)?data:[data])
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||'Insert failed');}
+    return res.json();
+  },
+  async update(table, data, match) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${match}`, {
+      method:'PATCH', headers:{...sb.headers(),'Prefer':'return=representation'},
+      body:JSON.stringify(data)
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||'Update failed');}
+    return res.json();
+  },
+  async delete(table, match) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?${match}`, {
+      method:'DELETE', headers:sb.headers()
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||'Delete failed');}
+    return true;
+  },
+
+  async signIn(email, pass) {
+    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json','apikey':SUPABASE_ANON},
+      body:JSON.stringify({email,password:pass})
+    });
+    const data = await res.json();
+    if(!res.ok) throw new Error(data.error_description||data.msg||'Login failed');
+    sb.token = data.access_token;
+    sb.user = data.user;
+    localStorage.setItem('sfh_token', data.access_token);
+    localStorage.setItem('sfh_user', JSON.stringify(data.user));
+    return data;
+  },
+
+  async signOut() {
+    await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+      method:'POST', headers:sb.headers()
+    }).catch(()=>{});
+    sb.token = null; sb.user = null;
+    localStorage.removeItem('sfh_token');
+    localStorage.removeItem('sfh_user');
+  },
+
+  async uploadFile(bucket, path, file) {
+    const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+      method:'POST',
+      headers:{'Authorization':`Bearer ${sb.token}`,'Content-Type':file.type},
+      body: file
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.message||'Upload failed');}
+    return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
+  }
+};
+
+// ── APP STATE ──
+let allBuildings = [], allUnits = [], allTeam = [], allFaq = [], allSettings = [];
+let editingId = null, currentPanel = 'dashboard';
+
+// ── AUTH INIT ──
+window.addEventListener('DOMContentLoaded', () => {
+  const token = localStorage.getItem('sfh_token');
+  const user = localStorage.getItem('sfh_user');
+  if (token && user) {
+    sb.token = token;
+    sb.user = JSON.parse(user);
+    showApp();
+  }
+  document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+  document.getElementById('login-email').addEventListener('keydown', e => { if(e.key==='Enter') document.getElementById('login-pass').focus(); });
+});
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const btn = document.getElementById('login-btn');
+  const err = document.getElementById('login-err');
+  if (!email || !pass) { showErr(err,'Please enter email and password.'); return; }
+  if (SUPABASE_URL.includes('YOUR_PROJECT')) { showErr(err,'⚠ Please configure SUPABASE_URL and SUPABASE_ANON at the top of this file.'); return; }
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  err.style.display = 'none';
+  try {
+    await sb.signIn(email, pass);
+    showApp();
+  } catch(e) {
+    showErr(err, e.message);
+    btn.disabled = false; btn.textContent = 'Sign In';
+  }
+}
+
+function showErr(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+
+async function doLogout() {
+  await sb.signOut();
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-btn').disabled = false;
+  document.getElementById('login-btn').textContent = 'Sign In';
+}
+
+function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  const email = sb.user?.email || 'Admin';
+  document.getElementById('user-email-display').textContent = email;
+  document.getElementById('user-avatar').textContent = email[0].toUpperCase();
+  loadAllData();
+}
+
+// ── DATA LOADING ──
+async function loadAllData() {
+  try {
+    [allBuildings, allUnits, allTeam, allFaq, allSettings] = await Promise.all([
+      sb.select('buildings','order=name.asc'),
+      sb.select('units','order=building_id.asc,sort_order.asc'),
+      sb.select('team_members','order=sort_order.asc'),
+      sb.select('faq','order=sort_order.asc'),
+      sb.select('site_settings','order=section.asc,key.asc'),
+    ]);
+    renderDashboard();
+    renderBuildings();
+    renderUnitsTable();
+    renderTeam();
+    renderFaq();
+    renderSettings();
+    populateImageTargets();
+    loadInbox();
+  } catch(e) {
+    toast('error', 'Failed to load data: ' + e.message);
+  }
+}
+
+// ── PANEL NAVIGATION ──
+function showPanel(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  if(el) el.classList.add('active');
+  currentPanel = id;
+  const titles = {dashboard:'Dashboard',buildings:'Buildings',units:'Units',images:'Image Manager',team:'Team Members',faq:'FAQ',settings:'Site Settings',inbox:'Contact Inbox'};
+  document.getElementById('topbar-title').textContent = titles[id]||id;
+  if(id==='inbox') loadInbox();
+}
+
+// ── TOAST ──
+function toast(type, msg, dur=3500) {
+  const area = document.getElementById('toast-area');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  const icons = {success:'✓',error:'✕',info:'ℹ'};
+  el.innerHTML = `<span>${icons[type]||'•'}</span> ${msg}`;
+  area.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transform='translateX(20px)'; el.style.transition='all .3s'; setTimeout(()=>el.remove(),300); }, dur);
+}
+
+// ── MODAL ──
+let modalSaveFn = null;
+function openModal(title, bodyHTML, saveFn, saveLabel='Save Changes') {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = bodyHTML;
+  const saveBtn = document.getElementById('modal-save-btn');
+  saveBtn.textContent = saveLabel;
+  saveBtn.onclick = async () => {
+    saveBtn.disabled = true; saveBtn.textContent = 'Saving...';
+    try { await saveFn(); } catch(e){ toast('error',e.message); }
+    saveBtn.disabled = false; saveBtn.textContent = saveLabel;
+  };
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); editingId=null; }
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+document.getElementById('modal-overlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeModal(); });
+
+// ── DASHBOARD ──
+function renderDashboard() {
+  const shortCount = allUnits.filter(u=>u.rental_type==='Short-Term').length;
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-value orange">${allUnits.length}</div><div class="stat-label">Total Units</div><div class="stat-sub">Across ${allBuildings.length} buildings</div></div>
+    <div class="stat-card"><div class="stat-value">${allBuildings.length}</div><div class="stat-label">Buildings</div></div>
+    <div class="stat-card"><div class="stat-value">${shortCount}</div><div class="stat-label">Short-Term Units</div></div>
+    <div class="stat-card"><div class="stat-value" id="dash-unread">—</div><div class="stat-label">Unread Messages</div></div>`;
+
+  document.getElementById('dash-buildings').innerHTML = allBuildings.map(b=>`
+    <div class="recent-item" onclick="showPanel('buildings',document.querySelector('.nav-item:nth-child(2)'))">
+      <div><div class="recent-item-name">${b.name}</div><div class="recent-item-sub">${b.address||''}</div></div>
+      <div style="display:flex;gap:6px;flex-shrink:0">${renderBadge(b.short_count,'Short-T')}</div>
+    </div>`).join('');
+}
+
+function renderBadge(v, label) {
+  if(!v) return '';
+  return `<span class="badge badge-short">${v} ${label}</span>`;
+}
+
+// ── BUILDINGS ──
+function renderBuildings() {
+  document.getElementById('buildings-list').innerHTML = allBuildings.map(b=>`
+    <div class="building-row" onclick="openBuildingModal('${b.id}')">
+      <div class="building-row-indicator"></div>
+      <div class="building-row-info">
+        <div class="building-row-name">${b.name}</div>
+        <div class="building-row-addr">${b.address||''} · ${b.neighborhood||''}</div>
+        <div class="building-row-stats">
+          <span><strong>${b.total_units||0}</strong> total units</span>
+          <span><strong>${b.short_count||0}</strong> short-term</span>
+          <span><strong>${b.medium_count||0}</strong> medium-term</span>
+          <span><strong>${b.long_count||0}</strong> long-term</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-shrink:0">
+        <button class="act-btn act-edit" onclick="event.stopPropagation();openBuildingModal('${b.id}')">Edit</button>
+        <button class="act-btn act-del" onclick="event.stopPropagation();deleteBuilding('${b.id}')">Delete</button>
+      </div>
+    </div>`).join('') || '<div class="empty-state"><span>🏛</span><p>No buildings yet</p></div>';
+}
+
+function openBuildingModal(id=null) {
+  editingId = id;
+  const b = id ? allBuildings.find(x=>x.id===id) : {};
+  const highlights = (b.highlights||[]).join('\n');
+  const amenities = (b.amenities||[]).join('\n');
+  openModal(id ? `Edit: ${b.name}` : 'Add Building', `
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Building ID (slug)</label>
+        <input class="form-input" id="b-id" value="${b.id||''}" placeholder="bentley-lofts" ${id?'readonly':''}></div>
+      <div class="form-group"><label class="form-label">Building Name</label>
+        <input class="form-input" id="b-name" value="${esc(b.name||'')}"></div>
+      <div class="form-group"><label class="form-label">Tagline</label>
+        <input class="form-input" id="b-tagline" value="${esc(b.tagline||'')}"></div>
+      <div class="form-group"><label class="form-label">Neighborhood</label>
+        <input class="form-input" id="b-neighborhood" value="${esc(b.neighborhood||'')}"></div>
+      <div class="form-group span-2"><label class="form-label">Address</label>
+        <input class="form-input" id="b-address" value="${esc(b.address||'')}"></div>
+      <div class="form-group span-2"><label class="form-label">Description</label>
+        <textarea class="form-textarea" id="b-desc">${esc(b.description||'')}</textarea></div>
+      <div class="form-group"><label class="form-label">Highlights (one per line)</label>
+        <textarea class="form-textarea" id="b-highlights" style="min-height:120px">${esc(highlights)}</textarea></div>
+      <div class="form-group"><label class="form-label">Amenities (one per line)</label>
+        <textarea class="form-textarea" id="b-amenities" style="min-height:120px">${esc(amenities)}</textarea></div>
+      <div class="form-group"><label class="form-label">Short-Term Count</label>
+        <input class="form-input" id="b-short" type="number" value="${b.short_count||0}"></div>
+      <div class="form-group"><label class="form-label">Medium-Term Count</label>
+        <input class="form-input" id="b-medium" type="number" value="${b.medium_count||0}"></div>
+      <div class="form-group span-2"><hr class="form-divider"><div class="form-section-label">SEO</div></div>
+      <div class="form-group span-2"><label class="form-label">SEO Title</label>
+        <input class="form-input" id="b-seo-title" value="${esc(b.seo_title||'')}"></div>
+      <div class="form-group span-2"><label class="form-label">SEO Description</label>
+        <textarea class="form-textarea" id="b-seo-desc" style="min-height:70px">${esc(b.seo_description||'')}</textarea></div>
+    </div>`, saveBuildingModal);
+}
+
+async function saveBuildingModal() {
+  const data = {
+    name: v('b-name'), tagline: v('b-tagline'), address: v('b-address'),
+    neighborhood: v('b-neighborhood'), description: v('b-desc'),
+    highlights: v('b-highlights').split('\n').filter(l=>l.trim()),
+    amenities: v('b-amenities').split('\n').filter(l=>l.trim()),
+    short_count: parseInt(v('b-short'))||0, medium_count: parseInt(v('b-medium'))||0,
+    seo_title: v('b-seo-title'), seo_description: v('b-seo-desc'),
+  };
+  if (!editingId) {
+    const id = v('b-id').trim();
+    if(!id) throw new Error('Building ID is required');
+    data.id = id; data.long_count = 0; data.total_units = 0;
+    await sb.insert('buildings', data);
+    toast('success', `Building "${data.name}" created`);
+  } else {
+    await sb.update('buildings', data, `id=eq.${editingId}`);
+    toast('success', 'Building updated');
+  }
+  closeModal(); await loadAllData();
+  document.getElementById('last-saved').textContent = 'Saved ' + new Date().toLocaleTimeString();
+}
+
+async function deleteBuilding(id) {
+  if(!confirm(`Delete building "${id}" and ALL its units? This cannot be undone.`)) return;
+  await sb.delete('buildings', `id=eq.${id}`);
+  toast('success','Building deleted'); await loadAllData();
+}
+
+// ── UNITS ──
+function renderUnitsTable() {
+  // populate building filter
+  const bf = document.getElementById('units-building-filter');
+  const cur = bf.value;
+  bf.innerHTML = '<option value="">All Buildings</option>' +
+    allBuildings.map(b=>`<option value="${b.id}" ${cur===b.id?'selected':''}>${b.name}</option>`).join('');
+  populateImageTargets();
+  filterUnitsTable();
+}
+
+function filterUnitsTable() {
+  const search = document.getElementById('units-search').value.toLowerCase();
+  const bFilter = document.getElementById('units-building-filter').value;
+  const tFilter = document.getElementById('units-type-filter').value;
+  const filtered = allUnits.filter(u => {
+    const matchSearch = !search || u.name.toLowerCase().includes(search) || (u.descriptor||'').toLowerCase().includes(search);
+    const matchB = !bFilter || u.building_id===bFilter;
+    const matchT = !tFilter || u.rental_type===tFilter;
+    return matchSearch && matchB && matchT;
+  });
+  const bMap = Object.fromEntries(allBuildings.map(b=>[b.id,b.name]));
+  document.getElementById('units-tbody').innerHTML = filtered.map(u=>`
+    <tr onclick="openUnitModal('${u.id}')">
+      <td><div style="font-weight:600">${u.name}</div><div class="td-label">${u.descriptor||''}</div></td>
+      <td>${bMap[u.building_id]||u.building_id||'—'}</td>
+      <td><span class="badge ${u.rental_type==='Short-Term'?'badge-short':u.rental_type==='Medium-Term'?'badge-medium':'badge-long'}">${u.rental_type||'—'}</span></td>
+      <td>${u.bedrooms||'—'} BR / ${u.bathrooms||'—'} BA</td>
+      <td style="font-weight:700;color:var(--orange)">${u.price||'—'}</td>
+      <td><span class="badge ${u.available===false?'badge-unavail':'badge-avail'}">${u.available===false?'Unavailable':'Available'}</span></td>
+      <td><div class="row-actions">
+        <button class="act-btn act-edit" onclick="event.stopPropagation();openUnitModal('${u.id}')">Edit</button>
+        <button class="act-btn act-del" onclick="event.stopPropagation();deleteUnit('${u.id}')">Delete</button>
+      </div></td>
+    </tr>`).join('') || `<tr><td colspan="7"><div class="empty-state"><span>🏠</span><p>No units found</p></div></td></tr>`;
+}
+
+function openUnitModal(id=null) {
+  editingId = id;
+  const u = id ? allUnits.find(x=>x.id===id) : {};
+  const amenities = (u.amenities||[]).join('\n');
+  openModal(id ? `Edit: ${u.name}` : 'Add Unit', `
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Unit ID (slug)</label>
+        <input class="form-input" id="u-id" value="${u.id||''}" placeholder="bentley-2e" ${id?'readonly':''}></div>
+      <div class="form-group"><label class="form-label">Unit Name</label>
+        <input class="form-input" id="u-name" value="${esc(u.name||'')}"></div>
+      <div class="form-group"><label class="form-label">Building</label>
+        <select class="form-select" id="u-building">
+          ${allBuildings.map(b=>`<option value="${b.id}" ${u.building_id===b.id?'selected':''}>${b.name}</option>`).join('')}
+        </select></div>
+      <div class="form-group"><label class="form-label">Rental Type</label>
+        <select class="form-select" id="u-type">
+          <option ${u.rental_type==='Short-Term'?'selected':''}>Short-Term</option>
+          <option ${u.rental_type==='Medium-Term'?'selected':''}>Medium-Term</option>
+          <option ${u.rental_type==='Long-Term'?'selected':''}>Long-Term</option>
+        </select></div>
+      <div class="form-group"><label class="form-label">Descriptor / Subtitle</label>
+        <input class="form-input" id="u-descriptor" value="${esc(u.descriptor||'')}"></div>
+      <div class="form-group"><label class="form-label">Price</label>
+        <input class="form-input" id="u-price" value="${esc(u.price||'')}" placeholder="From $139/night"></div>
+      <div class="form-group"><label class="form-label">Bedrooms</label>
+        <input class="form-input" id="u-br" value="${esc(u.bedrooms||'')}" placeholder="Studio, 1, 2, 3…"></div>
+      <div class="form-group"><label class="form-label">Bathrooms</label>
+        <input class="form-input" id="u-ba" value="${esc(u.bathrooms||'')}" placeholder="1, 1.5, 2…"></div>
+      <div class="form-group span-2"><label class="form-label">Description</label>
+        <textarea class="form-textarea" id="u-desc">${esc(u.description||'')}</textarea></div>
+      <div class="form-group"><label class="form-label">Amenities (one per line)</label>
+        <textarea class="form-textarea" id="u-amenities" style="min-height:100px">${esc(amenities)}</textarea></div>
+      <div class="form-group"><label class="form-label">Airbnb URL</label>
+        <input class="form-input" id="u-airbnb" value="${esc(u.airbnb_url||'')}"></div>
+      <div class="form-group"><label class="form-label">Sort Order</label>
+        <input class="form-input" id="u-sort" type="number" value="${u.sort_order||0}"></div>
+      <div class="form-group"><div class="form-label" style="margin-bottom:10px">Status</div>
+        <div class="toggle-wrap">
+          <button class="toggle ${u.available!==false?'on':''}" id="u-avail-toggle" onclick="this.classList.toggle('on')"></button>
+          <span class="toggle-label">Unit Available</span>
+        </div></div>
+      <div class="form-group"><div class="form-label" style="margin-bottom:10px">Featured</div>
+        <div class="toggle-wrap">
+          <button class="toggle ${u.featured?'on':''}" id="u-feat-toggle" onclick="this.classList.toggle('on')"></button>
+          <span class="toggle-label">Featured Unit</span>
+        </div></div>
+      <div class="form-group span-2"><hr class="form-divider"><div class="form-section-label">SEO</div></div>
+      <div class="form-group span-2"><label class="form-label">SEO Title</label>
+        <input class="form-input" id="u-seo-title" value="${esc(u.seo_title||'')}"></div>
+      <div class="form-group span-2"><label class="form-label">SEO Description</label>
+        <textarea class="form-textarea" id="u-seo-desc" style="min-height:70px">${esc(u.seo_description||'')}</textarea></div>
+    </div>`, saveUnitModal);
+}
+
+async function saveUnitModal() {
+  const data = {
+    name: v('u-name'), building_id: v('u-building'), rental_type: v('u-type'),
+    descriptor: v('u-descriptor'), price: v('u-price'),
+    bedrooms: v('u-br'), bathrooms: v('u-ba'), description: v('u-desc'),
+    amenities: v('u-amenities').split('\n').filter(l=>l.trim()),
+    airbnb_url: v('u-airbnb'), sort_order: parseInt(v('u-sort'))||0,
+    available: document.getElementById('u-avail-toggle').classList.contains('on'),
+    featured: document.getElementById('u-feat-toggle').classList.contains('on'),
+    seo_title: v('u-seo-title'), seo_description: v('u-seo-desc'),
+  };
+  if (!editingId) {
+    const id = v('u-id').trim();
+    if(!id) throw new Error('Unit ID is required');
+    data.id = id;
+    await sb.insert('units', data);
+    toast('success', `Unit "${data.name}" created`);
+  } else {
+    await sb.update('units', data, `id=eq.${editingId}`);
+    toast('success', 'Unit updated');
+  }
+  closeModal(); await loadAllData();
+  document.getElementById('last-saved').textContent = 'Saved ' + new Date().toLocaleTimeString();
+}
+
+async function deleteUnit(id) {
+  if(!confirm(`Delete unit "${id}"? This cannot be undone.`)) return;
+  await sb.delete('units', `id=eq.${id}`);
+  toast('success','Unit deleted'); await loadAllData();
+}
+
+// ── TEAM ──
+function renderTeam() {
+  document.getElementById('team-grid').innerHTML = allTeam.map(m=>`
+    <div class="team-card">
+      <div class="team-card-img">${m.photo_url?`<img src="${m.photo_url}" style="width:100%;height:100%;object-fit:cover" alt="${m.name}">` : '👤'}</div>
+      <div class="team-card-body">
+        <div class="team-card-name">${esc(m.name)}</div>
+        <div class="team-card-role">${esc(m.role||'')}</div>
+        <div class="team-card-info">
+          <span>📞 ${esc(m.phone||'—')}</span>
+          <span>✉ ${esc(m.email||'—')}</span>
+        </div>
+        ${m.bio?`<p style="font-size:12px;color:var(--muted);margin-top:10px;line-height:1.5;font-family:'Cormorant Garamond',serif">${esc(m.bio)}</p>`:''}
+      </div>
+      <div class="team-card-actions">
+        <button class="act-btn act-edit" onclick="openTeamModal(${m.id})">Edit</button>
+        <button class="act-btn act-del" onclick="deleteTeamMember(${m.id})">Remove</button>
+      </div>
+    </div>`).join('') || '<div class="empty-state"><span>👤</span><p>No team members yet</p></div>';
+}
+
+function openTeamModal(id=null) {
+  editingId = id;
+  const m = id ? allTeam.find(x=>x.id===id) : {};
+  openModal(id ? `Edit: ${m.name}` : 'Add Team Member', `
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Full Name</label>
+        <input class="form-input" id="t-name" value="${esc(m.name||'')}"></div>
+      <div class="form-group"><label class="form-label">Role / Title</label>
+        <input class="form-input" id="t-role" value="${esc(m.role||'')}"></div>
+      <div class="form-group"><label class="form-label">Phone</label>
+        <input class="form-input" id="t-phone" value="${esc(m.phone||'')}"></div>
+      <div class="form-group"><label class="form-label">Email</label>
+        <input class="form-input" id="t-email" value="${esc(m.email||'')}"></div>
+      <div class="form-group span-2"><label class="form-label">Bio</label>
+        <textarea class="form-textarea" id="t-bio">${esc(m.bio||'')}</textarea></div>
+      <div class="form-group span-2"><label class="form-label">Photo URL</label>
+        <input class="form-input" id="t-photo" value="${esc(m.photo_url||'')}" placeholder="https://..."></div>
+      <div class="form-group"><label class="form-label">Sort Order</label>
+        <input class="form-input" id="t-sort" type="number" value="${m.sort_order||0}"></div>
+      <div class="form-group"><div class="form-label" style="margin-bottom:10px">Status</div>
+        <div class="toggle-wrap">
+          <button class="toggle ${m.active!==false?'on':''}" id="t-active-toggle" onclick="this.classList.toggle('on')"></button>
+          <span class="toggle-label">Active / Visible</span>
+        </div></div>
+    </div>`, saveTeamModal);
+}
+
+async function saveTeamModal() {
+  const data = {
+    name: v('t-name'), role: v('t-role'), phone: v('t-phone'), email: v('t-email'),
+    bio: v('t-bio'), photo_url: v('t-photo'), sort_order: parseInt(v('t-sort'))||0,
+    active: document.getElementById('t-active-toggle').classList.contains('on'),
+  };
+  if(!data.name) throw new Error('Name is required');
+  if (!editingId) {
+    await sb.insert('team_members', data);
+    toast('success', `${data.name} added to team`);
+  } else {
+    await sb.update('team_members', data, `id=eq.${editingId}`);
+    toast('success', 'Team member updated');
+  }
+  closeModal(); allTeam = await sb.select('team_members','order=sort_order.asc'); renderTeam();
+}
+
+async function deleteTeamMember(id) {
+  const m = allTeam.find(x=>x.id===id);
+  if(!confirm(`Remove ${m?.name} from the team?`)) return;
+  await sb.delete('team_members',`id=eq.${id}`);
+  toast('success','Team member removed'); allTeam = await sb.select('team_members','order=sort_order.asc'); renderTeam();
+}
+
+// ── FAQ ──
+function renderFaq() {
+  document.getElementById('faq-list').innerHTML = allFaq.map(f=>`
+    <div class="faq-item">
+      <div class="faq-item-q">
+        <span>${esc(f.question)}</span>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="act-btn act-edit" onclick="openFaqModal(${f.id})">Edit</button>
+          <button class="act-btn act-del" onclick="deleteFaq(${f.id})">Delete</button>
+        </div>
+      </div>
+      <div class="faq-item-a">${esc(f.answer)}</div>
+      <div class="faq-item-meta">
+        <span class="badge badge-medium">${esc(f.category||'General')}</span>
+        <span class="badge ${f.active?'badge-avail':'badge-unavail'}">${f.active?'Active':'Hidden'}</span>
+      </div>
+    </div>`).join('') || '<div class="empty-state"><span>❓</span><p>No FAQ items yet</p></div>';
+}
+
+function openFaqModal(id=null) {
+  editingId = id;
+  const f = id ? allFaq.find(x=>x.id===id) : {};
+  openModal(id ? 'Edit FAQ' : 'Add FAQ Question', `
+    <div class="form-grid cols-1">
+      <div class="form-group"><label class="form-label">Question</label>
+        <input class="form-input" id="f-q" value="${esc(f.question||'')}"></div>
+      <div class="form-group"><label class="form-label">Answer</label>
+        <textarea class="form-textarea" id="f-a" style="min-height:120px">${esc(f.answer||'')}</textarea></div>
+      <div class="form-group"><label class="form-label">Category</label>
+        <input class="form-input" id="f-cat" value="${esc(f.category||'General')}" placeholder="General, Booking, Units…"></div>
+      <div class="form-group"><label class="form-label">Sort Order</label>
+        <input class="form-input" id="f-sort" type="number" value="${f.sort_order||0}"></div>
+      <div class="form-group"><div class="form-label" style="margin-bottom:10px">Visibility</div>
+        <div class="toggle-wrap">
+          <button class="toggle ${f.active!==false?'on':''}" id="f-active-toggle" onclick="this.classList.toggle('on')"></button>
+          <span class="toggle-label">Show on website</span>
+        </div></div>
+    </div>`, saveFaqModal);
+}
+
+async function saveFaqModal() {
+  const data = {
+    question: v('f-q'), answer: v('f-a'), category: v('f-cat')||'General',
+    sort_order: parseInt(v('f-sort'))||0,
+    active: document.getElementById('f-active-toggle').classList.contains('on'),
+  };
+  if(!data.question||!data.answer) throw new Error('Question and answer are required');
+  if (!editingId) {
+    await sb.insert('faq', data);
+    toast('success','FAQ question added');
+  } else {
+    await sb.update('faq', data, `id=eq.${editingId}`);
+    toast('success','FAQ updated');
+  }
+  closeModal(); allFaq = await sb.select('faq','order=sort_order.asc'); renderFaq();
+}
+
+async function deleteFaq(id) {
+  if(!confirm('Delete this FAQ entry?')) return;
+  await sb.delete('faq',`id=eq.${id}`);
+  toast('success','FAQ deleted'); allFaq = await sb.select('faq','order=sort_order.asc'); renderFaq();
+}
+
+// ── SETTINGS ──
+function renderSettings() {
+  const sections = {};
+  allSettings.forEach(s => {
+    if(!sections[s.section]) sections[s.section] = [];
+    sections[s.section].push(s);
+  });
+  const sectionLabels = {branding:'Branding',contact:'Contact Information',homepage:'Homepage Content',seo:'SEO Defaults',footer:'Footer'};
+  document.getElementById('settings-sections').innerHTML = Object.entries(sections).map(([sec, items])=>`
+    <div class="settings-card">
+      <div class="settings-card-header">
+        <div class="settings-card-title">${sectionLabels[sec]||sec.charAt(0).toUpperCase()+sec.slice(1)}</div>
+      </div>
+      <div class="settings-card-body">
+        ${items.map(s=>`
+          <div class="settings-row" id="srow-${s.key}">
+            <div class="settings-row-info">
+              <div class="settings-row-key">${s.label||s.key}</div>
+              <div class="settings-row-val" id="sval-${s.key}">${esc(s.value||'—')}</div>
+              <div class="inline-edit-wrap" id="sedit-${s.key}" style="display:none">
+                <input class="inline-input" id="sinput-${s.key}" value="${esc(s.value||'')}">
+                <button class="btn-sm btn-sm-save" onclick="saveSetting('${s.key}')">Save</button>
+                <button class="btn-sm btn-sm-cancel" onclick="cancelSetting('${s.key}')">Cancel</button>
+              </div>
+            </div>
+            <div class="settings-row-edit">
+              <button class="act-btn act-edit" onclick="editSetting('${s.key}')">Edit</button>
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('') || '<div class="empty-state"><span>⚙</span><p>No settings found</p></div>';
+}
+
+function editSetting(key) {
+  document.getElementById(`sval-${key}`).style.display='none';
+  document.getElementById(`sedit-${key}`).style.display='flex';
+  document.getElementById(`sinput-${key}`).focus();
+}
+function cancelSetting(key) {
+  document.getElementById(`sval-${key}`).style.display='block';
+  document.getElementById(`sedit-${key}`).style.display='none';
+}
+async function saveSetting(key) {
+  const val = document.getElementById(`sinput-${key}`).value;
+  await sb.update('site_settings',{value:val},`key=eq.${key}`);
+  document.getElementById(`sval-${key}`).textContent = val||'—';
+  cancelSetting(key);
+  toast('success','Setting saved');
+  const s = allSettings.find(x=>x.key===key);
+  if(s) s.value = val;
+  document.getElementById('last-saved').textContent = 'Saved ' + new Date().toLocaleTimeString();
+}
+
+// ── IMAGES ──
+function populateImageTargets() {
+  const sel = document.getElementById('img-target');
+  const cur = sel.value;
+  sel.innerHTML = '<option value="">— Select a building or unit —</option>' +
+    '<optgroup label="Buildings">' +
+    allBuildings.map(b=>`<option value="building:${b.id}">${b.name}</option>`).join('') +
+    '</optgroup><optgroup label="Units">' +
+    allUnits.map(u=>`<option value="unit:${u.id}">${u.name}</option>`).join('') +
+    '</optgroup>';
+  if(cur) sel.value = cur;
+}
+
+async function loadImagesFor() {
+  const val = document.getElementById('img-target').value;
+  if(!val) return;
+  const [type, id] = val.split(':');
+  const table = type==='building' ? 'buildings' : 'units';
+  try {
+    const data = await sb.select(table, `id=eq.${id}&select=images`);
+    const images = data[0]?.images || [];
+    renderCurrentImages(images, type, id);
+  } catch(e){ toast('error','Failed to load images'); }
+}
+
+function renderCurrentImages(images, type, id) {
+  const grid = document.getElementById('img-current-grid');
+  if(!images.length) { grid.innerHTML='<div class="empty-state"><span>📷</span><p>No images uploaded yet</p></div>'; return; }
+  grid.innerHTML = images.map((url,i)=>`
+    <div class="img-thumb">
+      <img src="${url}" alt="Image ${i+1}">
+      <button class="img-thumb-del" onclick="deleteImage('${type}','${id}',${i})">✕</button>
+    </div>`).join('');
+}
+
+async function deleteImage(type, id, idx) {
+  if(!confirm('Remove this image?')) return;
+  const table = type==='building' ? 'buildings' : 'units';
+  const data = await sb.select(table, `id=eq.${id}&select=images`);
+  const images = [...(data[0]?.images||[])];
+  images.splice(idx,1);
+  await sb.update(table, {images}, `id=eq.${id}`);
+  toast('success','Image removed'); loadImagesFor();
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  document.getElementById('img-drop-zone').classList.remove('drag');
+  const files = [...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'));
+  uploadImages(files);
+}
+
+function handleFileSelect(e) {
+  const files = [...e.target.files];
+  uploadImages(files);
+}
+
+async function uploadImages(files) {
+  const val = document.getElementById('img-target').value;
+  if(!val) { toast('error','Please select a building or unit first'); return; }
+  const [type, id] = val.split(':');
+  const table = type==='building' ? 'buildings' : 'units';
+
+  let uploaded = 0;
+  for(const file of files) {
+    if(file.size > 5*1024*1024) { toast('error',`${file.name} is too large (max 5MB)`); continue; }
+    try {
+      const path = `${type}s/${id}/${Date.now()}-${file.name.replace(/\s/g,'_')}`;
+      const url = await sb.uploadFile('property-images', path, file);
+      // append to existing images
+      const existing = await sb.select(table, `id=eq.${id}&select=images`);
+      const images = [...(existing[0]?.images||[]), url];
+      await sb.update(table, {images}, `id=eq.${id}`);
+      uploaded++;
+    } catch(e){ toast('error',`Failed to upload ${file.name}: ${e.message}`); }
+  }
+  if(uploaded>0) { toast('success',`${uploaded} image${uploaded>1?'s':''} uploaded`); loadImagesFor(); }
+  document.getElementById('img-file-input').value='';
+}
+
+// ── INBOX ──
+async function loadInbox() {
+  try {
+    const items = await sb.select('contact_submissions','order=created_at.desc');
+    const unread = items.filter(x=>!x.read).length;
+    const badge = document.getElementById('inbox-badge');
+    document.getElementById('dash-unread').textContent = unread;
+    if(unread>0){ badge.style.display='inline'; badge.textContent=unread; } else { badge.style.display='none'; }
+    document.getElementById('inbox-list').innerHTML = items.map(s=>`
+      <div class="inbox-item ${!s.read?'unread':''}" onclick="viewSubmission(${s.id})">
+        <div class="inbox-item-name">${esc(s.name||'Anonymous')} ${!s.read?'<span class="badge badge-short" style="margin-left:6px">New</span>':''}</div>
+        <div class="inbox-item-preview">${esc(s.message||'').substring(0,120)}${(s.message||'').length>120?'…':''}</div>
+        <div class="inbox-item-meta">
+          <span>✉ ${esc(s.email||'—')}</span>
+          <span>📞 ${esc(s.phone||'—')}</span>
+          ${s.unit_interest?`<span>🏠 ${esc(s.unit_interest)}</span>`:''}
+          <span>${new Date(s.created_at).toLocaleDateString()}</span>
+        </div>
+      </div>`).join('') || '<div class="empty-state"><span>✉</span><p>No submissions yet</p></div>';
+  } catch(e){ toast('error','Failed to load inbox: '+e.message); }
+}
+
+async function viewSubmission(id) {
+  const s = (await sb.select('contact_submissions',`id=eq.${id}`))[0];
+  await sb.update('contact_submissions',{read:true},`id=eq.${id}`).catch(()=>{});
+  openModal(`Message from ${s.name||'Anonymous'}`, `
+    <div class="form-grid cols-1" style="gap:12px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div><div class="form-label" style="margin-bottom:4px">Name</div><div style="font-size:14px;color:var(--text)">${esc(s.name||'—')}</div></div>
+        <div><div class="form-label" style="margin-bottom:4px">Date</div><div style="font-size:14px;color:var(--text)">${new Date(s.created_at).toLocaleString()}</div></div>
+        <div><div class="form-label" style="margin-bottom:4px">Email</div><div style="font-size:14px;color:var(--orange)">${esc(s.email||'—')}</div></div>
+        <div><div class="form-label" style="margin-bottom:4px">Phone</div><div style="font-size:14px;color:var(--orange)">${esc(s.phone||'—')}</div></div>
+        ${s.unit_interest?`<div><div class="form-label" style="margin-bottom:4px">Unit Interest</div><div style="font-size:14px">${esc(s.unit_interest)}</div></div>`:''}
+        ${s.rental_type?`<div><div class="form-label" style="margin-bottom:4px">Rental Type</div><div style="font-size:14px"><span class="badge badge-short">${esc(s.rental_type)}</span></div></div>`:''}
+      </div>
+      <div style="padding:16px;background:var(--dark3);border-radius:4px;border:1px solid var(--border)">
+        <div class="form-label" style="margin-bottom:8px">Message</div>
+        <div style="font-size:14px;color:var(--text);line-height:1.7;font-family:'Cormorant Garamond',serif">${esc(s.message||'No message')}</div>
+      </div>
+      <div style="display:flex;gap:10px;padding-top:4px">
+        <a href="mailto:${esc(s.email)}" class="btn-add" style="text-decoration:none">Reply by Email</a>
+        ${s.phone?`<a href="tel:${esc(s.phone)}" class="btn-cancel" style="text-decoration:none;display:inline-flex;align-items:center">Call ${esc(s.phone)}</a>`:''}
+      </div>
+    </div>`, ()=>{ closeModal(); loadInbox(); }, 'Mark as Read');
+  loadInbox();
+}
+
+// ── HELPERS ──
+function v(id) { return (document.getElementById(id)?.value||'').trim(); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  // ============================================================
+  // PAGE EDITOR — Full CMS for every page
+  // ============================================================
+
+  const PAGE_CONFIGS = {
+    page_homepage: {
+      title: 'Homepage',
+      sub: 'Edit all text content on the main homepage',
+      page: 'homepage',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'eyebrow', label: 'Eyebrow Text', type: 'input' },
+          { field: 'title', label: 'Main Headline', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle / Tagline', type: 'textarea' },
+          { field: 'button_primary', label: 'Primary Button Text', type: 'input' },
+          { field: 'button_secondary', label: 'Secondary Button Text', type: 'input' },
+          { field: 'stat1_number', label: 'Stat 1 Number', type: 'input' },
+          { field: 'stat1_label', label: 'Stat 1 Label', type: 'input' },
+          { field: 'stat2_number', label: 'Stat 2 Number', type: 'input' },
+          { field: 'stat2_label', label: 'Stat 2 Label', type: 'input' },
+          { field: 'stat3_number', label: 'Stat 3 Number', type: 'input' },
+          { field: 'stat3_label', label: 'Stat 3 Label', type: 'input' },
+        ]},
+        { key: 'stay_cards', label: 'Stay Type Cards', fields: [
+          { field: 'section_label', label: 'Section Label', type: 'input' },
+          { field: 'short_title', label: 'Short-Term Title', type: 'input' },
+          { field: 'short_desc', label: 'Short-Term Description', type: 'textarea' },
+          { field: 'short_button', label: 'Short-Term Button', type: 'input' },
+          { field: 'medium_title', label: 'Medium-Term Title', type: 'input' },
+          { field: 'medium_desc', label: 'Medium-Term Description', type: 'textarea' },
+          { field: 'medium_button', label: 'Medium-Term Button', type: 'input' },
+          { field: 'long_title', label: 'Long-Term Title', type: 'input' },
+          { field: 'long_desc', label: 'Long-Term Description', type: 'textarea' },
+          { field: 'long_button', label: 'Long-Term Button', type: 'input' },
+        ]},
+        { key: 'testimonials', label: 'Guest Testimonials', fields: [
+          { field: 'quote1', label: 'Quote 1', type: 'textarea' },
+          { field: 'author1', label: 'Author 1 Name', type: 'input' },
+          { field: 'property1', label: 'Author 1 Property', type: 'input' },
+          { field: 'quote2', label: 'Quote 2', type: 'textarea' },
+          { field: 'author2', label: 'Author 2 Name', type: 'input' },
+          { field: 'property2', label: 'Author 2 Property', type: 'input' },
+          { field: 'quote3', label: 'Quote 3', type: 'textarea' },
+          { field: 'author3', label: 'Author 3 Name', type: 'input' },
+          { field: 'property3', label: 'Author 3 Property', type: 'input' },
+        ]},
+        { key: 'cta', label: 'Call to Action Band', fields: [
+          { field: 'subtitle', label: 'Eyebrow Text', type: 'input' },
+          { field: 'title', label: 'Main CTA Text', type: 'input' },
+          { field: 'button', label: 'Button Text', type: 'input' },
+        ]},
+        { key: 'contact_section', label: 'Contact Section', fields: [
+          { field: 'section_label', label: 'Section Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'intro', label: 'Intro Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_contact: {
+      title: 'Contact Page',
+      sub: 'Edit all text on the contact page',
+      page: 'contact',
+      sections: [
+        { key: 'hero', label: 'Left Column — Contact Info', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Headline', type: 'input' },
+          { field: 'person1_name', label: 'Person 1 Name', type: 'input' },
+          { field: 'person1_role', label: 'Person 1 Role', type: 'input' },
+          { field: 'person1_phone', label: 'Person 1 Phone', type: 'input' },
+          { field: 'person2_name', label: 'Person 2 Name', type: 'input' },
+          { field: 'person2_role', label: 'Person 2 Role', type: 'input' },
+          { field: 'person2_phone', label: 'Person 2 Phone', type: 'input' },
+          { field: 'person3_name', label: 'Person 3 Name', type: 'input' },
+          { field: 'person3_role', label: 'Person 3 Role', type: 'input' },
+          { field: 'person3_phone', label: 'Person 3 Phone', type: 'input' },
+          { field: 'email', label: 'Email Address', type: 'input' },
+        ]},
+        { key: 'form', label: 'Form Section', fields: [
+          { field: 'eyebrow', label: 'Form Eyebrow', type: 'input' },
+          { field: 'title', label: 'Form Title', type: 'input' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_faq: {
+      title: 'FAQ Page',
+      sub: 'Edit hero text and sidebar on the FAQ page. Edit FAQ questions/answers in the FAQ section.',
+      page: 'faq',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'sidebar', label: 'Sidebar', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_team: {
+      title: 'Team Page',
+      sub: 'Edit all text on the team page',
+      page: 'team',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'mission', label: 'Mission Statement', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'stats', label: 'Stats Bar', fields: [
+          { field: 'reviews', label: 'Reviews Number', type: 'input' },
+          { field: 'reviews_label', label: 'Reviews Label', type: 'input' },
+          { field: 'properties', label: 'Properties Number', type: 'input' },
+          { field: 'properties_label', label: 'Properties Label', type: 'input' },
+          { field: 'buildings', label: 'Buildings Number', type: 'input' },
+          { field: 'buildings_label', label: 'Buildings Label', type: 'input' },
+        ]},
+        { key: 'members', label: 'Team Members', fields: [
+          { field: 'person1_name', label: 'Person 1 Name', type: 'input' },
+          { field: 'person1_role', label: 'Person 1 Role', type: 'input' },
+          { field: 'person1_bio', label: 'Person 1 Bio', type: 'textarea' },
+          { field: 'person1_phone', label: 'Person 1 Phone', type: 'input' },
+          { field: 'person2_name', label: 'Person 2 Name', type: 'input' },
+          { field: 'person2_role', label: 'Person 2 Role', type: 'input' },
+          { field: 'person2_bio', label: 'Person 2 Bio', type: 'textarea' },
+          { field: 'person2_phone', label: 'Person 2 Phone', type: 'input' },
+          { field: 'person3_name', label: 'Person 3 Name', type: 'input' },
+          { field: 'person3_role', label: 'Person 3 Role', type: 'input' },
+          { field: 'person3_bio', label: 'Person 3 Bio', type: 'textarea' },
+          { field: 'person4_name', label: 'Person 4 Name', type: 'input' },
+          { field: 'person4_role', label: 'Person 4 Role', type: 'input' },
+          { field: 'person4_bio', label: 'Person 4 Bio', type: 'textarea' },
+          { field: 'person4_phone', label: 'Person 4 Phone', type: 'input' },
+          { field: 'person5_name', label: 'Person 5 Name', type: 'input' },
+          { field: 'person5_role', label: 'Person 5 Role', type: 'input' },
+          { field: 'person5_bio', label: 'Person 5 Bio', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_short_term: {
+      title: 'Short-Term Page',
+      sub: 'Edit all text on the short-term rentals page',
+      page: 'short_term',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'includes', label: 'What's Included Section', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'item1_label', label: 'Item 1 Label', type: 'input' },
+          { field: 'item1_desc', label: 'Item 1 Description', type: 'textarea' },
+          { field: 'item2_label', label: 'Item 2 Label', type: 'input' },
+          { field: 'item2_desc', label: 'Item 2 Description', type: 'textarea' },
+          { field: 'item3_label', label: 'Item 3 Label', type: 'input' },
+          { field: 'item3_desc', label: 'Item 3 Description', type: 'textarea' },
+          { field: 'item4_label', label: 'Item 4 Label', type: 'input' },
+          { field: 'item4_desc', label: 'Item 4 Description', type: 'textarea' },
+        ]},
+        { key: 'listings', label: 'Listings Section', fields: [
+          { field: 'intro', label: 'Intro / Count Text', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'desc', label: 'Description', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_medium_term: {
+      title: 'Medium-Term Page',
+      sub: 'Edit all text on the medium-term rentals page',
+      page: 'medium_term',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'who_for', label: 'Who It's For Section', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'item1_label', label: 'Item 1 Label', type: 'input' },
+          { field: 'item1_desc', label: 'Item 1 Description', type: 'textarea' },
+          { field: 'item2_label', label: 'Item 2 Label', type: 'input' },
+          { field: 'item2_desc', label: 'Item 2 Description', type: 'textarea' },
+          { field: 'item3_label', label: 'Item 3 Label', type: 'input' },
+          { field: 'item3_desc', label: 'Item 3 Description', type: 'textarea' },
+          { field: 'item4_label', label: 'Item 4 Label', type: 'input' },
+          { field: 'item4_desc', label: 'Item 4 Description', type: 'textarea' },
+        ]},
+        { key: 'listings', label: 'Listings Section', fields: [
+          { field: 'intro', label: 'Intro / Count Text', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'desc', label: 'Description', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_long_term: {
+      title: 'Long-Term Page',
+      sub: 'Edit all text on the long-term rentals page',
+      page: 'long_term',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'why', label: 'Why Long-Term Section', fields: [
+          { field: 'eyebrow', label: 'Eyebrow', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+          { field: 'fact1_text', label: 'Fact 1 Label', type: 'input' },
+          { field: 'fact1_desc', label: 'Fact 1 Description', type: 'textarea' },
+          { field: 'fact2_text', label: 'Fact 2 Label', type: 'input' },
+          { field: 'fact2_desc', label: 'Fact 2 Description', type: 'textarea' },
+          { field: 'fact3_text', label: 'Fact 3 Label', type: 'input' },
+          { field: 'fact3_desc', label: 'Fact 3 Description', type: 'textarea' },
+          { field: 'fact4_text', label: 'Fact 4 Label', type: 'input' },
+          { field: 'fact4_desc', label: 'Fact 4 Description', type: 'textarea' },
+        ]},
+        { key: 'listings', label: 'Listings Section', fields: [
+          { field: 'intro', label: 'Intro / Count Text', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'desc', label: 'Description', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_properties_overview: {
+      title: 'Properties Overview Page',
+      sub: 'Edit all text on the properties overview page',
+      page: 'properties_overview',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'intro', label: 'Intro Section', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'desc', label: 'Description', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+    page_all_properties: {
+      title: 'All Properties Page',
+      sub: 'Edit all text on the all properties listing page',
+      page: 'all_properties',
+      sections: [
+        { key: 'hero', label: 'Hero Section', fields: [
+          { field: 'page_label', label: 'Page Label', type: 'input' },
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'subtitle', label: 'Subtitle', type: 'textarea' },
+        ]},
+        { key: 'callout', label: 'Bottom Callout', fields: [
+          { field: 'title', label: 'Title', type: 'input' },
+          { field: 'body', label: 'Body Text', type: 'textarea' },
+        ]},
+        { key: 'footer', label: 'Footer', fields: [
+          { field: 'brand_name', label: 'Brand Name', type: 'input' },
+          { field: 'tagline', label: 'Tagline', type: 'input' },
+          { field: 'copy', label: 'Footer Description', type: 'textarea' },
+        ]},
+      ]
+    },
+  };
+
+  // Load and render a page editor panel
+  async function loadPageEditor(panelKey) {
+    const config = PAGE_CONFIGS[panelKey];
+    if (!config) return;
+
+    const panel = document.getElementById(`panel-${panelKey}`);
+    panel.innerHTML = `<div class="panel-header"><div><div class="panel-title">${config.title}</div><div class="panel-sub">${config.sub}</div></div></div><div class="panel-body"><div class="page-editor" id="pe-${panelKey}"><div style="text-align:center;padding:60px;color:var(--muted)">Loading content...</div></div></div>`;
+
+    // Fetch current values from Supabase
+    const content = {};
+    try {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/page_content?page=eq.${config.page}&select=section,field,value`,
+        { headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${sb.token || SUPABASE_ANON}` } }
+      );
+      const rows = await res.json();
+      rows.forEach(r => {
+        if (!content[r.section]) content[r.section] = {};
+        content[r.section][r.field] = r.value;
+      });
+    } catch(e) {
+      console.warn('Failed to load page content', e);
+    }
+
+    // Render sections
+    const editor = document.getElementById(`pe-${panelKey}`);
+    editor.innerHTML = config.sections.map(section => `
+      <div class="pe-section">
+        <div class="pe-section-header">
+          <div class="pe-section-title">${section.label}</div>
+        </div>
+        <div class="pe-fields">
+          ${section.fields.map(f => `
+            <div class="pe-field">
+              <label class="pe-label">${f.label}</label>
+              ${f.type === 'textarea'
+                ? `<textarea class="pe-input pe-textarea" data-page="${config.page}" data-section="${section.key}" data-field="${f.field}">${content[section.key]?.[f.field] || ''}</textarea>`
+                : `<input class="pe-input" type="text" data-page="${config.page}" data-section="${section.key}" data-field="${f.field}" value="${(content[section.key]?.[f.field] || '').replace(/"/g, '&quot;')}">`
+              }
+            </div>
+          `).join('')}
+        </div>
+        <div class="pe-save-bar">
+          <span class="pe-save-status" id="status-${panelKey}-${section.key}"></span>
+          <button class="pe-save-btn" onclick="savePageSection('${panelKey}', '${config.page}', '${section.key}', this)">
+            Save ${section.label}
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function savePageSection(panelKey, page, sectionKey, btn) {
+    const statusEl = document.getElementById(`status-${panelKey}-${sectionKey}`);
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+    statusEl.textContent = '';
+    statusEl.className = 'pe-save-status';
+
+    // Collect all inputs for this section
+    const inputs = document.querySelectorAll(`[data-page="${page}"][data-section="${sectionKey}"]`);
+    const updates = [];
+    inputs.forEach(input => {
+      updates.push({
+        page: page,
+        section: sectionKey,
+        field: input.dataset.field,
+        value: input.value
+      });
+    });
+
+    // Upsert each field
+    let allOk = true;
+    for (const update of updates) {
+      try {
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/page_content?page=eq.${update.page}&section=eq.${update.section}&field=eq.${update.field}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'apikey': SUPABASE_ANON,
+              'Authorization': `Bearer ${sb.token || SUPABASE_ANON}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({ value: update.value })
+          }
+        );
+        if (!res.ok) {
+          // Row might not exist yet — try INSERT
+          const insertRes = await fetch(
+            `${SUPABASE_URL}/rest/v1/page_content`,
+            {
+              method: 'POST',
+              headers: {
+                'apikey': SUPABASE_ANON,
+                'Authorization': `Bearer ${sb.token || SUPABASE_ANON}`,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+              },
+              body: JSON.stringify(update)
+            }
+          );
+          if (!insertRes.ok) allOk = false;
+        }
+      } catch(e) {
+        allOk = false;
+      }
+    }
+
+    btn.disabled = false;
+    btn.textContent = `Save ${sectionKey.replace(/_/g,' ').replace(/\b\w/g, c => c.toUpperCase())}`;
+
+    if (allOk) {
+      statusEl.textContent = '✓ Saved — changes are live';
+      statusEl.className = 'pe-save-status saved';
+      setTimeout(() => { statusEl.textContent = ''; statusEl.className = 'pe-save-status'; }, 4000);
+    } else {
+      statusEl.textContent = '✗ Save failed — check connection';
+      statusEl.className = 'pe-save-status error';
+    }
+  }
+
+  // Hook into showPanel to load page editors on demand
+  const _origShowPanel = showPanel;
+  showPanel = function(name, el) {
+    _origShowPanel(name, el);
+    if (name.startsWith('page_')) {
+      loadPageEditor(name);
+    }
+  };
+
+</script>
+</body>
+</html>
