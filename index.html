@@ -1313,7 +1313,7 @@ let allUnits = [];
 
 async function loadFeaturedProperties() {
   try {
-    const res = await fetch(SB_URL + "/rest/v1/units?order=sort_order.asc&available=eq.true&limit=6", {
+    const res = await fetch(SB_URL + "/rest/v1/units?order=sort_order.asc&available=eq.true&building_id=neq.tudor-house&limit=6", {
       headers: { apikey: SB_KEY, "Authorization": "Bearer " + SB_KEY }
     });
     allUnits = res.ok ? await res.json() : [];

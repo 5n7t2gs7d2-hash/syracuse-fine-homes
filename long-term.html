@@ -194,7 +194,7 @@ function renderCard(u){
   </a>`;
 }
 (async()=>{
-  const units=await sbFetch('/rest/v1/units?rental_type=eq.Long-Term&order=sort_order.asc&available=eq.true');
+  const units=await sbFetch('/rest/v1/units?rental_type=eq.Long-Term&order=sort_order.asc&available=eq.true&building_id=neq.tudor-house');
   const el=document.getElementById('unitCount');
   if(el) el.textContent=units.length;
   document.getElementById('propsGrid').innerHTML=units.length?units.map(renderCard).join(''):'<p style="grid-column:1/-1;text-align:center;padding:40px;font-family:Cormorant Garamond,serif;font-size:20px;color:#5A5A5A;">No units available.</p>';

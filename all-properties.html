@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Properties | Syracuse Fine Homes | Luxury Rentals Syracuse NY</title>
-    <meta name="description" content="Browse all 35 luxury apartments available at Syracuse Fine Homes — short-term, medium-term, and long-term rentals in Syracuse, NY.">
+    <meta name="description" content="Browse all 33 luxury apartments available at Syracuse Fine Homes — short-term, medium-term, and long-term rentals in Syracuse, NY.">
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -91,7 +91,7 @@
         <div class="hero-inner">
             <div class="hero-eyebrow">Syracuse Fine Homes</div>
             <h1>All Properties</h1>
-            <p>Browse all 35 available apartments across our 7 luxury buildings in Syracuse, NY.</p>
+            <p>Browse all 33 available apartments across our 6 luxury buildings in Syracuse, NY.</p>
         </div>
     </div>
 
@@ -167,7 +167,7 @@ function renderCard(u){
   </a>`;
 }
 (async()=>{
-  allUnits=await sbFetch('/rest/v1/units?order=building_id.asc,sort_order.asc&available=eq.true');
+  allUnits=await sbFetch('/rest/v1/units?order=building_id.asc,sort_order.asc&available=eq.true&building_id=neq.tudor-house');
   renderGrid('all');
   const cl=document.getElementById('countLabel');
   if(cl) cl.textContent='Showing all '+allUnits.length+' units';
