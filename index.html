@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Syracuse Fine Homes | Luxury Apartment Rentals in Syracuse, NY</title>
+    <meta name="description" content="Discover luxury apartment rentals in Syracuse, NY. Syracuse Fine Homes offers premium short-term, medium-term, and long-term rental properties in downtown Syracuse, Armory Square, and near Syracuse University.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=block">
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100;200;300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=block" rel="stylesheet">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --orange: #F76900;
+            --black: #0A0A0A;
+            --charcoal: #141414;
+            --dark: #1C1C1C;
+            --mid: #3A3A3A;
+            --muted: #6B6B6B;
+            --light: #C8C8C8;
+            --border: #2A2A2A;
+            --cream: #F5F2EE;
+            --cream-dark: #EDE9E3;
+            --white: #FFFFFF;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--black);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ─── HEADER ─── */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            transition: all 0.4s ease;
+        }
+
+        .header-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 60px;
+            height: 88px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+        }
+
+        .logo-mark {
+            width: 44px;
+            height: 44px;
+            background: var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .logo-wordmark {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .logo-name {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .logo-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1;
+        }
+
+        .header.scrolled {
+            background: var(--charcoal);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover { color: var(--white); }
+
+        .nav-cta {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 11px 24px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-cta:hover { border-color: var(--orange); color: var(--orange); }
+
+        /* ─── HERO ─── */
+        .hero {
+            height: 100vh;
+            min-height: 700px;
+            background: url('hero-bg.jpeg') center center / cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            overflow: hidden;
+        }
+
+        /* Overlay for readability over photo */
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0,0,0,0.78) 0%,
+                rgba(0,0,0,0.55) 50%,
+                rgba(0,0,0,0.80) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Secondary left-side gradient for extra readability under the text column */
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to right,
+                rgba(0,0,0,0.55) 0%,
+                rgba(0,0,0,0.15) 50%,
+                transparent 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Vertical orange rule — left accent */
+        .hero-rule {
+            position: absolute;
+            left: 60px;
+            top: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--orange) 25%, var(--orange) 75%, transparent);
+            opacity: 0.35;
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            width: 100%;
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 60px 100px 90px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: end;
+        }
+
+        .hero-eyebrow {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        .hero-eyebrow::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 2px;
+            background: var(--orange);
+            flex-shrink: 0;
+            box-shadow: 0 0 8px rgba(247,105,0,0.4);
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-size: clamp(58px, 7vw, 92px);
+            line-height: 1.0;
+            color: var(--white);
+            letter-spacing: -1px;
+            margin-bottom: 32px;
+            text-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            opacity: 0;
+            animation: fadeUp 0.9s ease 0.5s forwards;
+        }
+
+        /* Lock the "finest" em color to orange at high specificity so font-swap repaints can't flip it */
+        .hero-title em,
+        h1.hero-title em {
+            font-style: italic !important;
+            color: var(--orange) !important;
+            text-shadow: 0 4px 24px rgba(247,105,0,0.25) !important;
+        }
+
+        .hero-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 300;
+            font-style: italic;
+            font-size: 21px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+            max-width: 460px;
+            margin-bottom: 52px;
+            opacity: 0;
+            animation: fadeUp 0.9s ease 0.7s forwards;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            opacity: 0;
+            animation: fadeUp 0.9s ease 0.9s forwards;
+        }
+
+        .btn-primary {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--orange);
+            border: 1px solid var(--orange);
+            padding: 15px 36px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover { background: transparent; color: var(--orange); }
+
+        .btn-ghost {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s, gap 0.3s;
+        }
+
+        .btn-ghost::after { content: '→'; }
+        .btn-ghost:hover { color: var(--white); gap: 16px; }
+
+        /* Hero right stats */
+        .hero-right {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            opacity: 0;
+            animation: fadeUp 1s ease 1.1s forwards;
+        }
+
+        .hero-stats {
+            border-left: 1px solid rgba(255,255,255,0.08);
+            padding-left: 48px;
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+
+        .hero-stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 48px;
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1;
+        }
+
+        .hero-stat-number span { color: var(--orange); }
+
+        .hero-stat-label {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-top: 4px;
+        }
+
+        /* ─── STAY TYPE SECTION ─── */
+        .stay-section { background: var(--cream); }
+
+        .stay-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .stay-card {
+            padding: 64px 52px;
+            border-right: 1px solid var(--cream-dark);
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stay-card:last-child { border-right: none; }
+
+        .stay-card::before {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--orange);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .stay-card:hover::before { transform: scaleX(1); }
+        .stay-card:hover { background: var(--cream-dark); }
+
+        .stay-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            color: var(--orange);
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+        }
+
+        .stay-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 400;
+            color: var(--black);
+            margin-bottom: 6px;
+        }
+
+        .stay-duration {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .stay-description {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--mid);
+            line-height: 1.75;
+            margin-bottom: 32px;
+        }
+
+        .stay-link {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--black);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s, gap 0.3s;
+        }
+
+        .stay-card:hover .stay-link { color: var(--orange); gap: 16px; }
+        .stay-link::after { content: '→'; }
+
+        /* ─── FEATURED PROPERTIES ─── */
+        .properties-section {
+            padding: 120px 60px;
+            background: var(--white);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 56px;
+            max-width: 1440px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-label {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(34px, 4vw, 50px);
+            font-weight: 300;
+            color: var(--black);
+            line-height: 1.1;
+        }
+
+        .section-title em { font-style: italic; }
+
+        .section-view-all {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: color 0.3s, gap 0.3s;
+            white-space: nowrap;
+            margin-bottom: 6px;
+        }
+
+        .section-view-all::after { content: '→'; }
+        .section-view-all:hover { color: var(--black); gap: 16px; }
+
+        /* Filter tabs */
+        .filter-tabs {
+            max-width: 1440px;
+            margin: 0 auto 48px;
+            display: flex;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .filter-tab {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            padding: 14px 0;
+            margin-right: 36px;
+            cursor: pointer;
+            transition: all 0.25s;
+            position: relative;
+            bottom: -1px;
+        }
+
+        .filter-tab.active { color: var(--black); border-bottom-color: var(--orange); }
+        .filter-tab:hover { color: var(--black); }
+
+        /* Properties grid */
+        .properties-grid {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .property-card {
+            background: var(--white);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .property-image-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: var(--cream-dark);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+            display: block;
+        }
+
+        .property-card:hover .property-image { transform: scale(1.06); }
+
+        .property-badge {
+            position: absolute;
+            top: 20px; left: 20px;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            background: rgba(10,10,10,0.65);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+        }
+
+        .property-body {
+            padding: 28px 28px 32px;
+            border-top: 1px solid var(--cream-dark);
+        }
+
+        .property-meta {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 8px;
+        }
+
+        .property-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 400;
+            color: var(--black);
+            margin-bottom: 4px;
+        }
+
+        .property-address {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .property-details {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--cream-dark);
+        }
+
+        .property-detail { display: flex; flex-direction: column; gap: 2px; }
+
+        .detail-val {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--black);
+        }
+
+        .detail-lbl {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--light);
+        }
+
+        .property-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .property-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--black);
+        }
+
+        .property-price-period { font-size: 15px; color: var(--muted); }
+
+        .property-cta {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.3s, gap 0.3s;
+        }
+
+        .property-cta::after { content: '→'; }
+        .property-card:hover .property-cta { color: var(--orange); gap: 14px; }
+
+        /* ─── TESTIMONIAL ─── */
+        .testimonial-section {
+            background: var(--charcoal);
+            padding: 120px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Giant decorative quote mark */
+        .testimonial-section::before {
+            content: '\201C';
+            position: absolute;
+            top: -60px; left: 30px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 500px;
+            font-weight: 300;
+            color: rgba(247,105,0,0.05);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .testimonial-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-slide { display: none; }
+
+        .testimonial-slide.active {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .testimonial-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(20px, 2.5vw, 28px);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255,255,255,0.82);
+            line-height: 1.7;
+        }
+
+        .testimonial-rule {
+            width: 32px;
+            height: 2px;
+            background: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .testimonial-property {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        .testimonial-nav {
+            display: flex;
+            gap: 10px;
+            margin-top: 60px;
+        }
+
+        .t-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.18);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .t-dot.active {
+            background: var(--orange);
+            width: 24px;
+            border-radius: 3px;
+        }
+
+        /* ─── CTA BAND ─── */
+        .cta-band {
+            background: var(--black);
+            padding: 100px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Right-edge orange stripe */
+        .cta-band::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 4px;
+            background: var(--orange);
+        }
+
+        .cta-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 80px;
+        }
+
+        .cta-label {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 20px;
+        }
+
+        .cta-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(36px, 4vw, 54px);
+            font-weight: 300;
+            color: var(--white);
+            line-height: 1.15;
+        }
+
+        .cta-title em { font-style: italic; }
+
+        .cta-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: flex-end;
+        }
+
+        /* ─── CONTACT ─── */
+        .contact-section {
+            padding: 120px 60px;
+            background: var(--cream);
+        }
+
+        .contact-inner {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.4fr;
+            gap: 100px;
+            align-items: start;
+        }
+
+        .contact-intro {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--mid);
+            line-height: 1.85;
+            margin-bottom: 52px;
+        }
+
+        .contact-detail { margin-bottom: 28px; }
+
+        .contact-detail-label {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 5px;
+        }
+
+        .contact-detail-value {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 400;
+            color: var(--black);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: block;
+        }
+
+        .contact-detail-value:hover { color: var(--orange); }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-full { grid-column: 1 / -1; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+        .form-label {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mid);
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 14px 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 17px;
+            font-weight: 300;
+            color: var(--black);
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--cream-dark);
+            border-radius: 0;
+            outline: none;
+            transition: border-color 0.3s;
+            appearance: none;
+        }
+
+        .form-input::placeholder, .form-textarea::placeholder { color: var(--light); }
+        .form-input:focus, .form-select:focus, .form-textarea:focus { border-bottom-color: var(--orange); }
+        .form-textarea { min-height: 100px; resize: none; }
+
+        .form-submit {
+            margin-top: 40px;
+            font-family: 'League Spartan', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--white);
+            background: var(--black);
+            border: 1px solid var(--black);
+            padding: 16px 48px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-submit:hover { background: var(--orange); border-color: var(--orange); }
+
+        /* ─── FOOTER ─── */
+        .footer {
+            background: var(--charcoal);
+            padding: 80px 60px 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner { max-width: 1440px; margin: 0 auto; }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 60px;
+            padding-bottom: 60px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+
+        .footer-logo-mark {
+            width: 36px;
+            height: 36px;
+            background: var(--orange);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand-name {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--white);
+            margin-bottom: 5px;
+        }
+
+        .footer-brand-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 14px;
+            font-weight: 300;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .footer-brand-copy {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 15px;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .footer-col-title {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            margin-bottom: 24px;
+        }
+
+        .footer-links { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+
+        .footer-links a {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 16px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: var(--white); }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-copy {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.22);
+        }
+
+        .footer-social { display: flex; gap: 24px; }
+
+        .footer-social a {
+            font-family: 'League Spartan', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.28);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-social a:hover { color: var(--white); }
+
+        /* ─── ANIMATIONS ─── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1100px) {
+            .header-inner { padding: 0 32px; }
+            .hero-content { padding: 0 32px 80px 48px; grid-template-columns: 1fr; }
+            .hero-right { display: none; }
+            .stay-grid { grid-template-columns: 1fr; }
+            .stay-card { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+            .properties-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonial-slide.active { grid-template-columns: 1fr; gap: 40px; }
+            .cta-inner { grid-template-columns: 1fr; gap: 40px; }
+            .cta-actions { align-items: flex-start; }
+            .contact-inner { grid-template-columns: 1fr; gap: 60px; }
+            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+            .properties-section, .testimonial-section, .cta-band, .contact-section { padding-left: 32px; padding-right: 32px; }
+            .footer { padding-left: 32px; padding-right: 32px; }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .hero-title { font-size: 48px; }
+            .hero-rule { left: 24px; }
+            .properties-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-top { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+                <!-- Orange square logo mark — swap src with your actual PNG if desired -->
+                <div class="logo-mark" style="background:none;padding:0;width:42px;height:42px;"><img src="logo.png" alt="SFH" style="width:42px;height:42px;object-fit:contain;border-radius:4px;display:block;"></div>
+                <div class="logo-wordmark">
+                    <div class="logo-name">Syracuse Fine Homes</div>
+                    <div class="logo-tagline">The Way to Stay</div>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#rentals">Rentals</a></li>
+                    <li><a href="properties-overview.html">Properties</a></li>
+                    <li><a href="team.html">Team</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+
+            <a href="#contact" class="nav-cta">Begin Your Stay</a>
+        </div>
+    </header>
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-rule"></div>
+        <div class="hero-content">
+            <div>
+                <div class="hero-eyebrow">Syracuse, New York</div>
+                <h1 class="hero-title">
+                    The <em>finest</em><br>homes in<br>Syracuse.
+                </h1>
+                <p class="hero-subtitle">
+                    Curated luxury apartments for every length of stay — from a single night to a lifetime.
+                </p>
+                <div class="hero-actions">
+                    <a href="properties-overview.html" class="btn-primary">Explore Properties</a>
+                    <a href="#contact" class="btn-ghost">Request a Stay</a>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-stats">
+                    <div>
+                        <div class="hero-stat-number">50<span>+</span></div>
+                        <div class="hero-stat-label">Curated Properties</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">5<span>★</span></div>
+                        <div class="hero-stat-label">Guest Rating</div>
+                    </div>
+                    <div>
+                        <div class="hero-stat-number">3</div>
+                        <div class="hero-stat-label">Stay Categories</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- STAY TYPE CARDS -->
+    <section class="stay-section" id="rentals">
+        <div class="stay-grid">
+            <a href="short-term.html" class="stay-card">
+                <div class="stay-number">01</div>
+                <div class="stay-title">Short-Term</div>
+                <div class="stay-duration">Up to 1 Month</div>
+                <p class="stay-description">
+                    Fully furnished luxury apartments, ready the moment you arrive. Perfect for travel, relocation, or the long weekend that deserves a proper home.
+                </p>
+                <span class="stay-link">View Properties</span>
+            </a>
+            <a href="medium-term.html" class="stay-card">
+                <div class="stay-number">02</div>
+                <div class="stay-title">Medium-Term</div>
+                <div class="stay-duration">1 Month – 1 Year</div>
+                <p class="stay-description">
+                    Settle in without settling. Our medium-term residences offer the space and comfort of home with the flexibility your life demands.
+                </p>
+                <span class="stay-link">View Properties</span>
+            </a>
+            <a href="long-term.html" class="stay-card">
+                <div class="stay-number">03</div>
+                <div class="stay-title">Long-Term</div>
+                <div class="stay-duration">1 Year & Beyond</div>
+                <p class="stay-description">
+                    Make it yours. Our long-term residences are where exceptional design meets daily life — in the heart of Syracuse's finest neighborhoods.
+                </p>
+                <span class="stay-link">View Properties</span>
+            </a>
+        </div>
+    </section>
+
+
+    <!-- FEATURED PROPERTIES -->
+    <section class="properties-section" id="properties">
+        <div class="section-head">
+            <div>
+                <div class="section-label">Featured Residences</div>
+                <h2 class="section-title">Our <em>finest</em> available homes</h2>
+            </div>
+            <a href="all-properties.html" class="section-view-all">View All Properties</a>
+        </div>
+
+        <div class="filter-tabs" id="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="short">Short-Term</button>
+            <button class="filter-tab" data-filter="medium">Medium-Term</button>
+            <button class="filter-tab" data-filter="long">Long-Term</button>
+        </div>
+
+        <div class="properties-grid" id="properties-grid"></div>
+    </section>
+
+
+    <!-- TESTIMONIAL -->
+    <section class="testimonial-section">
+        <div class="testimonial-inner">
+            <div class="section-label" style="margin-bottom:60px;">Guest Experiences</div>
+            <div id="testimonial-carousel"></div>
+            <div class="testimonial-nav" id="testimonial-nav"></div>
+        </div>
+    </section>
+
+
+    <!-- CTA BAND -->
+    <section class="cta-band">
+        <div class="cta-inner">
+            <div>
+                <div class="cta-label">Ready to Begin?</div>
+                <h2 class="cta-title">
+                    Your fine home<br>is <em>one step away.</em>
+                </h2>
+            </div>
+            <div class="cta-actions">
+                <a href="#contact" class="btn-primary">Request Your Stay</a>
+                <a href="all-properties.html" class="btn-ghost" style="color:rgba(255,255,255,0.4);">Browse All Properties</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+        <div class="contact-inner">
+            <div>
+                <div class="section-label">Get In Touch</div>
+                <h2 class="section-title" style="margin-bottom:24px;">Begin your<br><em>consultation</em></h2>
+                <p class="contact-intro">
+                    Tell us what you're looking for and we'll find the perfect home. Every stay begins with a conversation.
+                </p>
+
+                <div class="contact-detail">
+                    <div class="contact-detail-label">Spiro</div>
+                    <a href="tel:9174946042" class="contact-detail-value">917-494-6042</a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-label">Will</div>
+                    <a href="tel:6466284332" class="contact-detail-value">646-628-4332</a>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-detail-label">Email</div>
+                    <a href="mailto:info@syracusefinehomes.com">info@syracusefinehomes.com</a>
+                </div>
+            </div>
+
+            <form id="contact-form" onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" name="firstName" placeholder="Jane" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" name="lastName" placeholder="Smith" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-input" name="email" placeholder="jane@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input" name="phone" placeholder="(555) 000-0000">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Length of Stay</label>
+                        <select class="form-select" name="stayType" required>
+                            <option value="" disabled selected>Select duration</option>
+                            <option value="short">Short-Term (up to 1 month)</option>
+                            <option value="medium">Medium-Term (1–12 months)</option>
+                            <option value="long">Long-Term (1 year+)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Move-In Date</label>
+                        <input type="date" class="form-input" name="moveIn">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group form-full">
+                        <label class="form-label">Property Type</label>
+                        <select class="form-select" name="propertyType">
+                            <option value="" disabled selected>What are you looking for?</option>
+                            <option value="studio">Studio</option>
+                            <option value="1br">1 Bedroom</option>
+                            <option value="2br1ba">2 Bedrooms, 1 Bathroom</option>
+                            <option value="2br2ba">2 Bedrooms, 2 Bathrooms</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group form-full">
+                        <label class="form-label">Additional Notes</label>
+                        <textarea class="form-textarea" name="notes" placeholder="Tell us about your needs, preferences, or a property you have in mind…"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="form-submit">Submit Request</button>
+            </form>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-top">
+                <div>
+                    <div class="footer-logo-mark" style="background:none;padding:0;"><img src="logo.png" alt="SFH" style="width:36px;height:36px;object-fit:contain;display:block;"></div>
+                    <div class="footer-brand-name">Syracuse Fine Homes</div>
+                    <div class="footer-brand-tagline">The Way to Stay</div>
+                    <p class="footer-brand-copy">Luxury furnished apartments for short, medium, and long-term stays across Syracuse's finest neighborhoods.</p>
+                </div>
+                <div>
+                    <div class="footer-col-title">Properties</div>
+                    <ul class="footer-links">
+                        <li><a href="short-term.html">Short-Term Rentals</a></li>
+                        <li><a href="medium-term.html">Medium-Term Rentals</a></li>
+                        <li><a href="long-term.html">Long-Term Rentals</a></li>
+                        <li><a href="all-properties.html">All Properties</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Buildings</div>
+                    <ul class="footer-links">
+                        <li><a href="bentley-lofts.html">Bentley Lofts</a></li>
+                        <li><a href="piper-phillips-residences.html">Piper-Phillips Residences</a></li>
+                        <li><a href="lofts-at-syracuse-trust.html">Lofts at Syracuse Trust</a></li>
+                        <li><a href="montgomery-house.html">Montgomery House</a></li>
+<li><a href="village-at-hillside-park.html">Village at Hillside Park</a></li>
+                        <li><a href="200-hickok.html">Hickok Bungalow</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="footer-col-title">Company</div>
+                    <ul class="footer-links">
+                        <li><a href="team.html">Our Team</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="mailto:info@syracusefinehomes.com">info@syracusefinehomes.com</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-copy">© 2026 Syracuse Fine Homes. All rights reserved.</div>
+                <div class="footer-social">
+                    <a href="https://instagram.com/syracusefinehomes" target="_blank">Instagram</a>
+                    <a href="https://facebook.com/syracusefinehomes" target="_blank">Facebook</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>
+const SB_URL = "https://xctptubheheuoneloxph.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjdHB0dWJoZWhldW9uZWxveHBoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwNDUwMDQsImV4cCI6MjA4NzYyMTAwNH0.306y0oyPxkyyOotptGokEeN7qd0vsoHVLvTfoZ00RkA";
+let allUnits = [];
+
+async function loadFeaturedProperties() {
+  try {
+    const res = await fetch(SB_URL + "/rest/v1/units?order=sort_order.asc&available=eq.true&building_id=neq.tudor-house&limit=6", {
+      headers: { apikey: SB_KEY, "Authorization": "Bearer " + SB_KEY }
+    });
+    allUnits = res.ok ? await res.json() : [];
+  } catch(e) { allUnits = []; }
+  renderProperties("all");
+}
+
+function renderProperties(filter) {
+  const map = { short: "Short-Term", medium: "Medium-Term", long: "Long-Term" };
+  const list = filter === "all" ? allUnits : allUnits.filter(u => u.rental_type === (map[filter] || filter));
+  const HOODS = {
+    "bentley-lofts": "Armory Square",
+    "piper-phillips-residences": "Armory Square",
+    "montgomery-house": "Downtown",
+    "lofts-at-syracuse-trust": "Downtown",
+    "village-at-hillside-park": "Hillside Park",
+    "hickok-bungalow": "Suburbs"
+  };
+  const getImgs = u => { try { return Array.isArray(u.images) ? u.images : JSON.parse(u.images || "[]"); } catch(e) { return []; } };
+  document.getElementById("properties-grid").innerHTML = list.length
+    ? list.map(u => {
+        const img = getImgs(u)[0] || "";
+        const beds = u.bedrooms === "Studio" ? "Studio" : (u.bedrooms ? u.bedrooms : "\u2014");
+        const hood = HOODS[u.building_id] || "";
+        const badge = u.rental_type ? u.rental_type : "";
+        const imgTag = img
+          ? '<img src="' + img + '" alt="' + u.name + '" class="property-image" loading="lazy">'
+          : '<div class="property-image" style="background:linear-gradient(135deg,#1a1a1a,#222);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:rgba(255,255,255,0.2);font-size:11px;letter-spacing:2px;font-family:League Spartan,sans-serif;text-transform:uppercase;">Photo Coming Soon</div>';
+        return '<a class="property-card" href="' + u.id + '.html" style="text-decoration:none;color:inherit;display:block;">'
+          + '<div class="property-image-wrap">' + imgTag
+          + '<div class="property-badge">' + badge + '</div></div>'
+          + '<div class="property-body">'
+          + '<div class="property-meta">' + badge + '</div>'
+          + '<div class="property-name">' + u.name + '</div>'
+          + '<div class="property-address">' + (u.descriptor || hood) + '</div>'
+          + '<div class="property-details">'
+          + '<div class="property-detail"><div class="detail-val">' + beds + '</div><div class="detail-lbl">Beds</div></div>'
+          + '<div class="property-detail"><div class="detail-val">' + (u.bathrooms || "\u2014") + '</div><div class="detail-lbl">Baths</div></div>'
+          + '<div class="property-detail"><div class="detail-val">' + (hood || "SYR") + '</div><div class="detail-lbl">Area</div></div>'
+          + '</div>'
+          + '<div class="property-footer">'
+          + '<div class="property-price">' + (u.price || "Contact us") + '</div>'
+          + '<div class="property-cta">View Listing \u2192</div>'
+          + '</div></div></a>';
+      }).join("")
+    : '<p style="text-align:center;padding:40px;font-family:Cormorant Garamond,serif;color:#5A5A5A;font-size:18px;">No properties found.</p>';
+}
+
+// Header scroll
+const header = document.getElementById("header");
+window.addEventListener("scroll", () => { header.classList.toggle("scrolled", window.scrollY > 60); });
+header.classList.toggle("scrolled", window.scrollY > 60);
+
+// Filter tabs
+document.getElementById("filter-tabs").addEventListener("click", e => {
+  if (!e.target.classList.contains("filter-tab")) return;
+  document.querySelectorAll(".filter-tab").forEach(t => t.classList.remove("active"));
+  e.target.classList.add("active");
+  renderProperties(e.target.dataset.filter);
+});
+
+// Testimonials
+const testimonials = [
+  { quote: "From the moment we arrived, everything exceeded our expectations. The space was spotless, beautifully decorated, and incredibly welcoming. Every detail had been thoughtfully considered. This was more than just a place to stay \u2014 it felt like a home away from home.", author: "Felicia", property: "Piper 3, Armory Square" },
+  { quote: "We stayed for three months while relocating to Syracuse and couldn\u2019t have asked for a better experience. The property was immaculate, the location perfect, and the team remarkably responsive. Genuinely the finest furnished rental I\u2019ve encountered.", author: "Michael R.", property: "Montgomery House, Downtown" },
+  { quote: "Absolutely stunning penthouse. The views of downtown Syracuse are breathtaking, and the quality of the furnishings is unlike anything I\u2019ve seen at this price point. We\u2019ve stayed at rentals across the country \u2014 this ranks among the very best.", author: "Jennifer L.", property: "Syracuse Trust 5, Downtown" }
+];
+let current = 0, rotationInterval;
+function renderTestimonials() {
+  document.getElementById("testimonial-carousel").innerHTML = testimonials.map((t,i) =>
+    '<div class="testimonial-slide ' + (i===0?"active":"") + '">'
+    + '<div class="testimonial-quote">\u201c' + t.quote + '\u201d</div>'
+    + '<div><div class="testimonial-rule"></div><div class="testimonial-author">' + t.author + '</div><div class="testimonial-property">' + t.property + '</div></div>'
+    + '</div>').join("");
+  document.getElementById("testimonial-nav").innerHTML = testimonials.map((_,i) =>
+    '<button class="t-dot ' + (i===0?"active":"") + '" data-i="' + i + '"></button>').join("");
+}
+function goTo(i) {
+  document.querySelectorAll(".testimonial-slide")[current].classList.remove("active");
+  document.querySelectorAll(".t-dot")[current].classList.remove("active");
+  current = i;
+  document.querySelectorAll(".testimonial-slide")[current].classList.add("active");
+  document.querySelectorAll(".t-dot")[current].classList.add("active");
+  clearInterval(rotationInterval);
+  startRotation();
+}
+function startRotation() {
+  rotationInterval = setInterval(() => goTo((current + 1) % testimonials.length), 8000);
+}
+document.getElementById("testimonial-nav").addEventListener("click", e => {
+  if (e.target.dataset.i !== undefined) goTo(+e.target.dataset.i);
+});
+
+// Reveal observer
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.style.opacity="1"; e.target.style.transform="translateY(0)"; } });
+}, { threshold: 0.05, rootMargin: "0px 0px -40px 0px" });
+document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+
+// Page content CMS
+(async function() {
+  try {
+    const r = await fetch(SB_URL + "/rest/v1/page_content?page=eq.homepage&select=section,field,value",
+      { headers: { apikey: SB_KEY, "Authorization": "Bearer " + SB_KEY } });
+    if (!r.ok) return;
+    const rows = await r.json(), c = {};
+    rows.forEach(row => { if(!c[row.section]) c[row.section]={}; c[row.section][row.field]=row.value; });
+    const set = (sel,sec,fld) => { const v=c[sec]&&c[sec][fld]; if(!v)return; document.querySelectorAll(sel).forEach(el=>el.textContent=v); };
+    set(".hero-eyebrow","hero","eyebrow");
+    set(".hero-title","hero","title");
+    set(".hero-subtitle","hero","subtitle");
+    set(".cta-title","cta","title");
+    set(".contact-intro","contact_section","intro");
+    set(".footer-brand-name","footer","brand_name");
+    set(".footer-brand-tagline","footer","tagline");
+    set(".footer-brand-copy","footer","copy");
+    const stays = document.querySelectorAll(".stay-title");
+    const descs = document.querySelectorAll(".stay-description");
+    if(stays[0]) stays[0].textContent = (c.stay_cards && c.stay_cards.short_title) || stays[0].textContent;
+    if(stays[1]) stays[1].textContent = (c.stay_cards && c.stay_cards.medium_title) || stays[1].textContent;
+    if(stays[2]) stays[2].textContent = (c.stay_cards && c.stay_cards.long_title) || stays[2].textContent;
+    if(descs[0]) descs[0].textContent = (c.stay_cards && c.stay_cards.short_desc) || descs[0].textContent;
+    if(descs[1]) descs[1].textContent = (c.stay_cards && c.stay_cards.medium_desc) || descs[1].textContent;
+    if(descs[2]) descs[2].textContent = (c.stay_cards && c.stay_cards.long_desc) || descs[2].textContent;
+  } catch(e) {}
+})();
+
+// Init
+loadFeaturedProperties();
+renderTestimonials();
+startRotation();
+</script>
+
+</body>
+</html>
