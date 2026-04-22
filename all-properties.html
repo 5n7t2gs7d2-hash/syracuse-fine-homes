@@ -122,8 +122,7 @@
                 <li><a href="piper-phillips-residences.html">Piper-Phillips Residences</a></li>
                 <li><a href="montgomery-house.html">Montgomery House</a></li>
                 <li><a href="lofts-at-syracuse-trust.html">Lofts at Syracuse Trust</a></li>
-                <li><a href="tudor-house.html">Tudor House</a></li>
-                <li><a href="village-at-hillside-park.html">Village at Hillside Park</a></li>
+<li><a href="village-at-hillside-park.html">Village at Hillside Park</a></li>
                 <li><a href="200-hickok.html">Hickok Bungalow</a></li>
             </ul></div>
             <div class="footer-section"><h3>Rentals</h3><ul class="footer-links">
@@ -145,7 +144,7 @@ const SB_URL='https://xctptubheheuoneloxph.supabase.co',SB_KEY='eyJhbGciOiJIUzI1
 async function sbFetch(path){const r=await fetch(SB_URL+path,{headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY}});if(!r.ok)return[];return r.json();}
 </script><script>
 let allUnits=[];
-const HOODS={'bentley-lofts':'Armory Square','piper-phillips-residences':'Armory Square','montgomery-house':'Downtown','lofts-at-syracuse-trust':'Downtown','tudor-house':'Near SU','village-at-hillside-park':'Hillside Park','hickok-bungalow':'Suburbs'};
+const HOODS={'bentley-lofts':'Armory Square','piper-phillips-residences':'Armory Square','montgomery-house':'Downtown','lofts-at-syracuse-trust':'Downtown','village-at-hillside-park':'Hillside Park','hickok-bungalow':'Suburbs'};
 function renderCard(u){
   const hood=HOODS[u.building_id]||'';
   const beds=u.bedrooms==='Studio'?'Studio':(u.bedrooms?u.bedrooms+' BR':'—');
